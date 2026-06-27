@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <title>Community — St. Monica Catholic Youth Parish Ongata Rongai</title>
+  <meta content="Meet our leadership team and youth families at St. Monica Catholic Youth Parish Ongata Rongai." name="description">
+
+  <link rel="stylesheet" href="/src/styles/fonts.css">
+  <link rel="stylesheet" href="/src/styles/main.css">
+  <link rel="stylesheet" href="/load.css">
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✝</text></svg>">
+
+  <style>
+    .loader {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 99999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-primary);
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    html.is-ready .loader {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+  </style>
+  <script>(localStorage.getItem('theme')==='dark')&&document.documentElement.setAttribute('data-theme','dark')</script>
+</head>
+<body data-inertia>
+
+  <!-- LOADER -->
+  <div class="loader" data-loader>
+    <div class="shadow">
+      <div id="svg-container">
+        <svg class="svg-hw" viewBox="-100 100 800 800" preserveAspectRatio="xMidYMid meet">
+          <path id="path7050" class="path" d="M 250,180 L 300,180 L 300,260 Z"></path>
+          <path id="path7062" class="path" d="M 300,180 L 350,180 L 300,260 Z"></path>
+          <path id="path7064" class="path" d="M 250,180 L 300,260 L 250,340 Z"></path>
+          <path id="path7065" class="path" d="M 350,180 L 300,260 L 350,340 Z"></path>
+          <path id="path7066" class="path" d="M 250,340 L 300,260 L 300,340 Z"></path>
+          <path id="path7067" class="path" d="M 350,340 L 300,260 L 300,340 Z"></path>
+          <path id="path7068" class="path" d="M 120,340 L 250,340 L 250,390 Z"></path>
+          <path id="path7069" class="path" d="M 120,340 L 250,390 L 120,390 Z"></path>
+          <path id="path7070" class="path" d="M 120,390 L 250,390 L 120,440 Z"></path>
+          <path id="path7071" class="path" d="M 120,440 L 250,390 L 250,440 Z"></path>
+          <path id="path7072" class="path" d="M 350,340 L 480,340 L 350,390 Z"></path>
+          <path id="path7076" class="path" d="M 480,340 L 480,390 L 350,390 Z"></path>
+          <path id="path7080" class="path" d="M 350,390 L 480,390 L 480,440 Z"></path>
+          <path id="path7081" class="path" d="M 350,390 L 480,440 L 350,440 Z"></path>
+          <path id="path7086" class="path" d="M 250,340 L 300,340 L 300,390 Z"></path>
+          <path id="path7088" class="path" d="M 250,340 L 300,390 L 250,390 Z"></path>
+          <path id="path7090" class="path" d="M 250,390 L 300,390 L 250,440 Z"></path>
+          <path id="path7091" class="path" d="M 250,440 L 300,390 L 300,440 Z"></path>
+          <path id="path7092" class="path" d="M 300,340 L 350,340 L 300,390 Z"></path>
+          <path id="path7094" class="path" d="M 350,340 L 350,390 L 300,390 Z"></path>
+          <path id="path7096" class="path" d="M 300,390 L 350,390 L 350,440 Z"></path>
+          <path id="path7098" class="path" d="M 300,390 L 350,440 L 300,440 Z"></path>
+          <path id="path7100" class="path" d="M 250,440 L 300,440 L 300,560 Z"></path>
+          <path id="path7101" class="path" d="M 250,440 L 300,560 L 250,560 Z"></path>
+          <path id="path7102" class="path" d="M 300,440 L 350,440 L 300,560 Z"></path>
+          <path id="path7104" class="path" d="M 350,440 L 350,560 L 300,560 Z"></path>
+          <path id="path7105" class="path" d="M 250,560 L 300,560 L 300,780 Z"></path>
+          <path id="path7106" class="path" d="M 250,560 L 300,780 L 250,780 Z"></path>
+          <path id="path7107" class="path" d="M 300,560 L 350,560 L 300,780 Z"></path>
+          <path id="path7108" class="path" d="M 350,560 L 350,780 L 300,780 Z"></path>
+        </svg>
+      </div>
+      <div class="loading">
+        <span data-l>S</span><span data-l>T</span><span data-l>.</span>
+        <span data-l>M</span><span data-l>O</span><span data-l>N</span><span data-l>I</span><span data-l>C</span><span data-l>A</span>
+        <br>
+        <span data-l>Y</span><span data-l>O</span><span data-l>U</span><span data-l>T</span><span data-l>H</span>
+        <br>
+        <span data-l>O</span><span data-l>N</span><span data-l>G</span><span data-l>A</span><span data-l>T</span><span data-l>A</span>&nbsp;<span data-l>R</span><span data-l>O</span><span data-l>N</span><span data-l>G</span><span data-l>A</span><span data-l>I</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" data-navbar>
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <span class="nav-logo-cross">✝</span>
+        <span class="nav-logo-text">St. Monica<span class="nav-logo-accent">Youth</span></span>
+      </a>
+      <div class="nav-links" data-nav-links>
+        <a href="/#about" class="nav-link" data-nav-link>About</a>
+        <a href="/events" class="nav-link" data-nav-link>Events</a>
+        <a href="/gallery" class="nav-link" data-nav-link>Gallery</a>
+        <a href="/community" class="nav-link is-active" data-nav-link>Community</a>
+        <a href="/sports/" class="nav-link" data-nav-link>Sports</a>
+        <a href="/trivia" class="nav-link" data-nav-link>Trivia</a>
+        <a href="/spotlight" class="nav-link" data-nav-link>Spotlight</a>
+        <a href="/#donate" class="nav-link nav-link-donate" data-nav-link>Donate</a>
+      </div>
+      <div class="nav-actions">
+        <a href="/#donate" class="button button-sm button-gold" data-nav-cta>Donate</a>
+        <button class="nav-theme-toggle" data-theme-toggle aria-label="Toggle theme">🌙</button>
+        <button class="nav-hamburger" data-nav-hamburger aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="section community-hero" data-community-hero>
+    <div class="container">
+      <div class="section-header" data-section-header>
+        <span class="section-tag">Our People</span>
+        <h1 class="section-title" data-split-lines>Community</h1>
+        <div class="section-divider"></div>
+        <p class="community-hero-sub">The hearts and hands that make St. Monica Youth a family of faith</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEADERSHIP -->
+  <section class="section leadership-section" data-leadership-section>
+    <div class="container">
+      <div class="section-header" data-section-header>
+        <span class="section-tag">Executive Team</span>
+        <h2 class="section-title" data-split-lines>Our Leadership</h2>
+        <div class="section-divider"></div>
+        <p class="section-desc">Guided by faith, led with love the team steering our youth community</p>
+      </div>
+      <div class="leadership-grid" data-leadership-grid></div>
+    </div>
+  </section>
+
+  <!-- FAMILY TREE -->
+  <section class="section family-section" data-family-section>
+    <div class="container">
+      <div class="section-header" data-section-header>
+        <span class="section-tag">Youth Families</span>
+        <h2 class="section-title" data-split-lines>Our Family Tree</h2>
+        <div class="section-divider"></div>
+        <p class="section-desc">Five families rooted in faith tap a fruit to meet the members</p>
+      </div>
+    </div>
+    <div class="tree-wrap" data-tree-wrap>
+      <div class="tree-container" data-tree-container>
+
+        <svg class="tree-svg" viewBox="0 0 600 680" preserveAspectRatio="xMidYMax meet" data-tree-svg>
+          <defs>
+            <linearGradient id="trunkGrad" x1="0" y1="0" x2="0.3" y2="1">
+              <stop offset="0%" stop-color="#6b4c30"/>
+              <stop offset="40%" stop-color="#4f321c"/>
+              <stop offset="100%" stop-color="#3a2210"/>
+            </linearGradient>
+            <linearGradient id="trunkHighlight" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="transparent"/>
+              <stop offset="40%" stop-color="rgba(255,220,160,0.08)"/>
+              <stop offset="100%" stop-color="transparent"/>
+            </linearGradient>
+            <radialGradient id="leafDark" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#2a7a2a"/>
+              <stop offset="100%" stop-color="#1a5a1a"/>
+            </radialGradient>
+            <radialGradient id="leafMid" cx="40%" cy="35%" r="55%">
+              <stop offset="0%" stop-color="#4a9a3a"/>
+              <stop offset="100%" stop-color="#2a6a2a"/>
+            </radialGradient>
+            <radialGradient id="leafLight" cx="35%" cy="30%" r="60%">
+              <stop offset="0%" stop-color="#6aba4a"/>
+              <stop offset="100%" stop-color="#3a8a2a"/>
+            </radialGradient>
+            <radialGradient id="fruit1Grad" cx="35%" cy="30%" r="60%">
+              <stop offset="0%" stop-color="#e84040"/>
+              <stop offset="50%" stop-color="#c02020"/>
+              <stop offset="100%" stop-color="#800000"/>
+            </radialGradient>
+            <radialGradient id="fruit2Grad" cx="35%" cy="30%" r="60%">
+              <stop offset="0%" stop-color="#d05050"/>
+              <stop offset="50%" stop-color="#a01818"/>
+              <stop offset="100%" stop-color="#600000"/>
+            </radialGradient>
+            <radialGradient id="fruit3Grad" cx="35%" cy="30%" r="60%">
+              <stop offset="0%" stop-color="#f06040"/>
+              <stop offset="50%" stop-color="#c83018"/>
+              <stop offset="100%" stop-color="#901000"/>
+            </radialGradient>
+            <radialGradient id="fruit4Grad" cx="35%" cy="30%" r="60%">
+              <stop offset="0%" stop-color="#e06030"/>
+              <stop offset="50%" stop-color="#b83018"/>
+              <stop offset="100%" stop-color="#701000"/>
+            </radialGradient>
+            <radialGradient id="fruit5Grad" cx="35%" cy="30%" r="60%">
+              <stop offset="0%" stop-color="#d08040"/>
+              <stop offset="50%" stop-color="#b06020"/>
+              <stop offset="100%" stop-color="#804010"/>
+            </radialGradient>
+            <filter id="treeShadow">
+              <feDropShadow dx="2" dy="5" stdDeviation="8" flood-opacity="0.2"/>
+            </filter>
+            <filter id="fruitShadow">
+              <feDropShadow dx="1" dy="3" stdDeviation="4" flood-opacity="0.25"/>
+            </filter>
+            <radialGradient id="groundShade" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="rgba(58,45,26,0.12)"/>
+              <stop offset="100%" stop-color="rgba(58,45,26,0)"/>
+            </radialGradient>
+          </defs>
+
+          <!-- sky background -->
+
+          <g class="tree-all" data-tree-all>
+
+            <!-- ground shadow -->
+            <ellipse cx="300" cy="660" rx="200" ry="14" fill="url(#groundShade)"/>
+
+            <!-- grass tufts at base -->
+            <g fill="#3a6a2a" opacity="0.6">
+              <path d="M220 660 Q222 640 218 630 Q224 642 226 660" />
+              <path d="M240 658 Q238 636 242 625 Q244 638 246 658" />
+              <path d="M280 660 Q278 642 282 630 Q284 640 286 660" />
+              <path d="M310 658 Q312 636 308 624 Q315 640 316 658" />
+              <path d="M350 660 Q348 644 352 632 Q355 642 356 660" />
+              <path d="M370 658 Q374 638 372 628 Q378 640 380 658" />
+              <path d="M260 660 Q262 644 258 634 Q264 644 266 660" />
+              <path d="M330 659 Q328 640 332 630 Q336 642 338 659" />
+            </g>
+
+            <!-- roots -->
+            <g fill="url(#trunkGrad)">
+              <path d="M265 650 Q240 660 200 658 Q230 654 255 642 Z"/>
+              <path d="M275 650 Q260 662 230 665 Q258 660 270 648 Z"/>
+              <path d="M330 650 Q360 658 400 656 Q370 652 345 642 Z"/>
+              <path d="M325 650 Q342 662 370 664 Q344 658 332 648 Z"/>
+              <path d="M295 652 Q285 664 270 668 Q290 662 298 654 Z"/>
+            </g>
+
+            <!-- trunk -->
+            <path class="tree-trunk-path" d="M268 658 C265 600 258 520 250 460 C246 430 248 400 255 370 C260 348 262 340 265 320 L335 320 C338 340 340 348 345 370 C352 400 354 430 350 460 C342 520 335 600 332 658 Z" fill="url(#trunkGrad)" filter="url(#treeShadow)"/>
+            <path class="tree-trunk-path" d="M268 658 C265 600 258 520 250 460 C246 430 248 400 255 370 C260 348 262 340 265 320 L335 320 C338 340 340 348 345 370 C352 400 354 430 350 460 C342 520 335 600 332 658 Z" fill="url(#trunkHighlight)"/>
+
+            <!-- bark texture lines -->
+            <g stroke="#2a1808" stroke-width="0.8" fill="none" opacity="0.3">
+              <path d="M272 650 Q270 580 264 500 Q260 440 268 370" />
+              <path d="M280 655 Q278 590 272 510 Q268 440 274 360" />
+              <path d="M290 656 Q288 600 282 520 Q278 450 282 360" />
+              <path d="M300 657 Q300 600 300 520 Q300 450 300 360" />
+              <path d="M310 656 Q312 600 318 520 Q322 450 318 360" />
+              <path d="M320 655 Q322 590 328 510 Q332 450 326 370" />
+              <path d="M328 650 Q330 580 336 500 Q340 440 332 370" />
+              <ellipse cx="285" cy="520" rx="5" ry="8" stroke-width="1.2" opacity="0.4"/>
+              <ellipse cx="315" cy="480" rx="4" ry="6" stroke-width="1.2" opacity="0.35"/>
+              <ellipse cx="275" cy="600" rx="6" ry="9" stroke-width="1" opacity="0.3"/>
+            </g>
+
+            <!-- branch 1: left lower -->
+            <g class="tree-branches" data-tree-branches>
+              <path d="M260 440 C230 430 200 400 170 350 C150 320 135 290 125 260 C120 248 118 235 115 220" stroke="#4f321c" stroke-width="14" fill="none" stroke-linecap="round" filter="url(#treeShadow)"/>
+              <path d="M115 220 C110 210 108 200 105 190" stroke="#4a2e18" stroke-width="8" fill="none" stroke-linecap="round"/>
+              <path d="M125 260 C115 270 100 275 90 268" stroke="#4a2e18" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <path d="M200 400 C185 410 170 415 155 410" stroke="#4a2e18" stroke-width="7" fill="none" stroke-linecap="round"/>
+            </g>
+
+            <!-- branch 2: left upper -->
+            <g class="tree-branches" data-tree-branches>
+              <path d="M262 370 C240 340 215 300 195 250 C185 225 175 200 170 175 C167 160 165 145 163 132" stroke="#4f321c" stroke-width="12" fill="none" stroke-linecap="round" filter="url(#treeShadow)"/>
+              <path d="M195 250 C180 255 165 258 155 245" stroke="#4a2e18" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <path d="M170 175 C155 168 143 165 132 170" stroke="#4a2e18" stroke-width="5" fill="none" stroke-linecap="round"/>
+            </g>
+
+            <!-- branch 3: top center -->
+            <g class="tree-branches" data-tree-branches>
+              <path d="M285 340 C282 300 285 250 288 200 C290 170 293 145 295 120" stroke="#4f321c" stroke-width="14" fill="none" stroke-linecap="round" filter="url(#treeShadow)"/>
+              <path d="M288 200 C275 185 260 175 248 165" stroke="#4a2e18" stroke-width="8" fill="none" stroke-linecap="round"/>
+              <path d="M293 145 C280 135 270 128 262 118" stroke="#4a2e18" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <path d="M310 340 C315 300 318 260 320 230 C322 210 325 195 328 180" stroke="#4f321c" stroke-width="12" fill="none" stroke-linecap="round" filter="url(#treeShadow)"/>
+              <path d="M320 230 C335 220 348 210 355 195" stroke="#4a2e18" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <path d="M328 180 C340 170 352 165 360 155" stroke="#4a2e18" stroke-width="5" fill="none" stroke-linecap="round"/>
+            </g>
+
+            <!-- branch 4: right upper -->
+            <g class="tree-branches" data-tree-branches>
+              <path d="M338 370 C360 340 385 300 405 250 C415 225 425 200 430 175 C433 160 435 145 437 132" stroke="#4f321c" stroke-width="12" fill="none" stroke-linecap="round" filter="url(#treeShadow)"/>
+              <path d="M405 250 C420 255 435 258 445 245" stroke="#4a2e18" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <path d="M430 175 C445 168 457 165 468 170" stroke="#4a2e18" stroke-width="5" fill="none" stroke-linecap="round"/>
+            </g>
+
+            <!-- branch 5: right lower -->
+            <g class="tree-branches" data-tree-branches>
+              <path d="M340 440 C370 430 400 400 430 350 C450 320 465 290 475 260 C480 248 482 235 485 220" stroke="#4f321c" stroke-width="14" fill="none" stroke-linecap="round" filter="url(#treeShadow)"/>
+              <path d="M485 220 C490 210 492 200 495 190" stroke="#4a2e18" stroke-width="8" fill="none" stroke-linecap="round"/>
+              <path d="M475 260 C485 270 500 275 510 268" stroke="#4a2e18" stroke-width="6" fill="none" stroke-linecap="round"/>
+              <path d="M400 400 C415 410 430 415 445 410" stroke="#4a2e18" stroke-width="7" fill="none" stroke-linecap="round"/>
+            </g>
+
+            <!-- foliage: dark base layer -->
+            <g class="tree-foliage" data-tree-foliage fill="url(#leafDark)">
+              <ellipse cx="140" cy="235" rx="70" ry="55"/>
+              <ellipse cx="165" cy="170" rx="65" ry="50"/>
+              <ellipse cx="295" cy="130" rx="75" ry="60"/>
+              <ellipse cx="435" cy="170" rx="65" ry="50"/>
+              <ellipse cx="460" cy="235" rx="70" ry="55"/>
+              <ellipse cx="300" cy="310" rx="85" ry="45"/>
+              <ellipse cx="220" cy="280" rx="60" ry="40"/>
+              <ellipse cx="380" cy="280" rx="60" ry="40"/>
+              <ellipse cx="200" cy="310" rx="55" ry="35"/>
+              <ellipse cx="400" cy="310" rx="55" ry="35"/>
+            </g>
+
+            <!-- foliage: mid green layer -->
+            <g class="tree-foliage" data-tree-foliage fill="url(#leafMid)">
+              <ellipse cx="135" cy="225" rx="60" ry="45"/>
+              <ellipse cx="160" cy="160" rx="55" ry="40"/>
+              <ellipse cx="295" cy="120" rx="65" ry="50"/>
+              <ellipse cx="440" cy="160" rx="55" ry="40"/>
+              <ellipse cx="465" cy="225" rx="60" ry="45"/>
+              <ellipse cx="300" cy="300" rx="75" ry="38"/>
+              <ellipse cx="225" cy="275" rx="50" ry="35"/>
+              <ellipse cx="375" cy="275" rx="50" ry="35"/>
+              <ellipse cx="185" cy="280" rx="45" ry="30"/>
+              <ellipse cx="415" cy="280" rx="45" ry="30"/>
+              <ellipse cx="260" cy="140" rx="45" ry="30"/>
+              <ellipse cx="340" cy="140" rx="45" ry="30"/>
+            </g>
+
+            <!-- foliage: light highlight layer -->
+            <g class="tree-foliage" data-tree-foliage fill="url(#leafLight)">
+              <ellipse cx="130" cy="215" rx="45" ry="32"/>
+              <ellipse cx="155" cy="150" rx="40" ry="28"/>
+              <ellipse cx="295" cy="108" rx="50" ry="35"/>
+              <ellipse cx="445" cy="150" rx="40" ry="28"/>
+              <ellipse cx="470" cy="215" rx="45" ry="32"/>
+              <ellipse cx="300" cy="290" rx="55" ry="28"/>
+              <ellipse cx="230" cy="268" rx="35" ry="24"/>
+              <ellipse cx="370" cy="268" rx="35" ry="24"/>
+              <ellipse cx="108" cy="210" rx="25" ry="20"/>
+              <ellipse cx="140" cy="140" rx="25" ry="18"/>
+              <ellipse cx="295" cy="95" rx="30" ry="20"/>
+              <ellipse cx="460" cy="140" rx="25" ry="18"/>
+              <ellipse cx="492" cy="210" rx="25" ry="20"/>
+            </g>
+
+            <!-- small leaf details on edges -->
+            <g fill="#7ac058" opacity="0.7">
+              <ellipse cx="95" cy="205" rx="12" ry="8" transform="rotate(-30 95 205)"/>
+              <ellipse cx="110" cy="235" rx="10" ry="6" transform="rotate(20 110 235)"/>
+              <ellipse cx="125" cy="135" rx="10" ry="6" transform="rotate(-45 125 135)"/>
+              <ellipse cx="155" cy="125" rx="11" ry="7" transform="rotate(-10 155 125)"/>
+              <ellipse cx="265" cy="88" rx="12" ry="7" transform="rotate(5 265 88)"/>
+              <ellipse cx="325" cy="88" rx="11" ry="7" transform="rotate(-5 325 88)"/>
+              <ellipse cx="445" cy="125" rx="10" ry="6" transform="rotate(10 445 125)"/>
+              <ellipse cx="475" cy="135" rx="10" ry="6" transform="rotate(45 475 135)"/>
+              <ellipse cx="490" cy="205" rx="12" ry="8" transform="rotate(30 490 205)"/>
+              <ellipse cx="505" cy="230" rx="10" ry="6" transform="rotate(-20 505 230)"/>
+              <ellipse cx="200" cy="320" rx="10" ry="6" transform="rotate(15 200 320)"/>
+              <ellipse cx="400" cy="320" rx="10" ry="6" transform="rotate(-15 400 320)"/>
+            </g>
+
+            <!-- Fruit 1 - red -->
+            <g class="tree-fruit" data-family="0" data-family-fruit style="cursor:pointer;">
+              <path d="M110 225 C108 222 106 218 108 215" stroke="#3a2d1a" stroke-width="2" fill="none"/>
+              <path d="M108 215 C105 212 102 210 100 208" stroke="#3a2d1a" stroke-width="1.5" fill="none"/>
+              <path d="M133 233 C130 258 148 278 170 275 C185 273 192 258 190 243 C188 230 175 218 160 218 C145 218 136 226 133 233 Z" fill="url(#fruit1Grad)" filter="url(#fruitShadow)"/>
+              <ellipse cx="148" cy="228" rx="10" ry="6" fill="rgba(255,255,255,0.2)" transform="rotate(-20 148 228)"/>
+              <text x="162" y="252" text-anchor="middle" fill="#fff" font-size="22" font-weight="bold" font-family="serif" opacity="0.8">1</text>
+            </g>
+
+            <!-- Fruit 2 - dark red -->
+            <g class="tree-fruit" data-family="1" data-family-fruit style="cursor:pointer;">
+              <path d="M160 160 C158 156 155 150 152 145" stroke="#3a2d1a" stroke-width="2" fill="none"/>
+              <path d="M152 145 C148 140 145 138 142 136" stroke="#3a2d1a" stroke-width="1.5" fill="none"/>
+              <path d="M149 173 C144 195 158 215 178 213 C192 211 198 197 196 183 C194 170 183 160 170 160 C158 160 152 167 149 173 Z" fill="url(#fruit2Grad)" filter="url(#fruitShadow)"/>
+              <ellipse cx="163" cy="168" rx="9" ry="5" fill="rgba(255,255,255,0.2)" transform="rotate(-30 163 168)"/>
+              <text x="173" y="192" text-anchor="middle" fill="#fff" font-size="22" font-weight="bold" font-family="serif" opacity="0.8">2</text>
+            </g>
+
+            <!-- Fruit 3 - orange-red -->
+            <g class="tree-fruit" data-family="2" data-family-fruit style="cursor:pointer;">
+              <path d="M305 100 C308 95 310 90 312 85" stroke="#3a2d1a" stroke-width="2.5" fill="none"/>
+              <path d="M312 85 C315 80 318 78 320 76" stroke="#3a2d1a" stroke-width="1.5" fill="none"/>
+              <path d="M285 104 C278 128 292 150 312 150 C330 150 338 134 336 118 C334 104 322 94 310 94 C298 94 289 98 285 104 Z" fill="url(#fruit3Grad)" filter="url(#fruitShadow)"/>
+              <ellipse cx="300" cy="108" rx="11" ry="7" fill="rgba(255,255,255,0.2)" transform="rotate(-15 300 108)"/>
+              <text x="312" y="130" text-anchor="middle" fill="#fff" font-size="24" font-weight="bold" font-family="serif" opacity="0.8">3</text>
+            </g>
+
+            <!-- Fruit 4 - rusty red -->
+            <g class="tree-fruit" data-family="3" data-family-fruit style="cursor:pointer;">
+              <path d="M445 160 C448 156 450 152 452 148" stroke="#3a2d1a" stroke-width="2" fill="none"/>
+              <path d="M452 148 C455 144 458 142 460 140" stroke="#3a2d1a" stroke-width="1.5" fill="none"/>
+              <path d="M434 172 C428 195 444 215 464 213 C478 211 484 197 482 183 C480 170 470 160 456 160 C442 160 436 167 434 172 Z" fill="url(#fruit4Grad)" filter="url(#fruitShadow)"/>
+              <ellipse cx="449" cy="167" rx="9" ry="5" fill="rgba(255,255,255,0.2)" transform="rotate(-25 449 167)"/>
+              <text x="460" y="192" text-anchor="middle" fill="#fff" font-size="22" font-weight="bold" font-family="serif" opacity="0.8">4</text>
+            </g>
+
+            <!-- Fruit 5 - orange-brown -->
+            <g class="tree-fruit" data-family="4" data-family-fruit style="cursor:pointer;">
+              <path d="M490 225 C492 222 494 218 496 215" stroke="#3a2d1a" stroke-width="2" fill="none"/>
+              <path d="M496 215 C499 212 502 210 504 208" stroke="#3a2d1a" stroke-width="1.5" fill="none"/>
+              <path d="M473 234 C470 260 488 280 510 277 C526 275 534 258 532 243 C530 230 518 220 503 220 C487 220 476 228 473 234 Z" fill="url(#fruit5Grad)" filter="url(#fruitShadow)"/>
+              <ellipse cx="490" cy="230" rx="10" ry="6" fill="rgba(255,255,255,0.2)" transform="rotate(-20 490 230)"/>
+              <text x="506" y="254" text-anchor="middle" fill="#fff" font-size="22" font-weight="bold" font-family="serif" opacity="0.8">5</text>
+            </g>
+
+            <!-- fallen leaves near base -->
+            <g opacity="0.4">
+              <ellipse cx="240" cy="655" rx="6" ry="4" fill="#8a6030" transform="rotate(25 240 655)"/>
+              <ellipse cx="360" cy="656" rx="5" ry="3" fill="#7a5030" transform="rotate(-15 360 656)"/>
+              <ellipse cx="280" cy="660" rx="5" ry="3" fill="#9a7040" transform="rotate(40 280 660)"/>
+              <ellipse cx="320" cy="658" rx="6" ry="3" fill="#8a6830" transform="rotate(-30 320 658)"/>
+            </g>
+
+          </g>
+
+        </svg>
+
+      </div>
+
+      <!-- active fruit label -->
+      <div class="tree-hint" data-tree-hint>Tap a fruit to reveal a family ✝</div>
+    </div>
+  </section>
+
+  <!-- FAMILY MODAL -->
+  <div class="family-modal" data-family-modal>
+    <div class="family-modal-overlay" data-family-modal-overlay></div>
+    <div class="family-modal-card" data-family-modal-card>
+      <button class="family-modal-close" data-family-modal-close aria-label="Close">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="family-modal-badge" data-family-modal-badge>Family</div>
+      <h3 class="family-modal-title" data-family-modal-title>St. Francis Family</h3>
+      <div class="family-modal-divider"></div>
+      <p class="family-modal-sub" data-family-modal-sub>The members of this family:</p>
+      <ul class="family-modal-list" data-family-modal-list>
+        <li>Kevin Omondi</li>
+        <li>Mary Wanjiku</li>
+        <li>Peter Kamau</li>
+        <li>Grace Njeri</li>
+        <li>David Mwangi</li>
+      </ul>
+      <div class="family-modal-footer">✝ Rooted in Christ</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer" data-footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="nav-logo" style="color:var(--text-on-dark);">
+          <span class="nav-logo-cross">✝</span>
+          <span class="nav-logo-text">St. Monica<span class="nav-logo-accent">Youth</span></span>
+        </div>
+        <p class="footer-desc">A vibrant Catholic youth community dedicated to faith, fellowship, and service since 2012.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <a href="#about">About</a>
+          <a href="#events">Events</a>
+          <a href="/sports/">Sports</a>
+          <a href="/community">Community</a>
+          <a href="/spotlight">Spotlight</a>
+        </div>
+          <div class="footer-col">
+          <h4>Programs</h4>
+          <a href="#">Faith Formation</a>
+          <a href="#">Youth Fun-Day</a>
+          <a href="#">Community Service</a>
+          <a href="#">Sports & Activities</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="#" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px;"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>Instagram
+          </a>
+          <a href="#" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px;"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>TikTok
+          </a>
+          <a href="https://chat.whatsapp.com/EeO8AntmkGR7xOT1MGCpKb" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;margin-right:4px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp
+          </a>
+          <a href="mailto:admin@stmonicayouth.app">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email Us
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 St. Monica Catholic Youth Parish | Designed by Wencylous Igadwa:[Gr4ktung]</p>
+        <p>✝ Faith • Hope • Love</p>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module" src="/src/js/community.js"></script>
+</body>
+</html>

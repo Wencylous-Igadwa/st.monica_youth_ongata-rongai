@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# If the request is for a valid directory or file, serve it directly
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# If a clean URL is requested (e.g., /community), map it to /community.html
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^([^/]+)/?$ $1.html [L]

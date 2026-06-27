@@ -1,0 +1,39 @@
+services:
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: st_monica
+      MYSQL_USER: monica
+      MYSQL_PASSWORD: monica123
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+
+  app:
+    build: .
+    ports:
+      - "3001:3001"
+    environment:
+      DB_HOST: db
+      DB_PORT: "3306"
+      DB_USER: monica
+      DB_PASS: monica123
+      DB_NAME: st_monica
+      JWT_SECRET: st-monica-parish-secret-2025
+      PORT: 3001
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - uploads_data:/app/server/uploads
+
+volumes:
+  db_data:
+  uploads_data:

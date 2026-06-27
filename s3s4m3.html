@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <title>Admin — St. Monica Catholic Youth Parish Ongata Rongai</title>
+  <meta content="Admin panel for managing St. Monica Catholic Youth Parish Ongata Rongai website content." name="description">
+
+  <link rel="stylesheet" href="/src/styles/fonts.css">
+  <link rel="stylesheet" href="/src/styles/main.css">
+  <link rel="stylesheet" href="/load.css">
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙</text></svg>">
+  <style>
+    .loader {
+      position: fixed; inset: 0; width: 100%; height: 100%; z-index: 99999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: var(--bg-primary);
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    html.is-ready .loader { opacity: 0; visibility: hidden; pointer-events: none; }
+  </style>
+  <script>(localStorage.getItem('theme')==='dark')&&document.documentElement.setAttribute('data-theme','dark')</script>
+</head>
+<body>
+
+  <div class="loader" data-loader>
+    <div class="shadow">
+      <div id="svg-container">
+        <svg class="svg-hw" viewBox="-100 100 800 800" preserveAspectRatio="xMidYMid meet">
+          <path id="path7050" class="path" d="M 250,180 L 300,180 L 300,260 Z"></path>
+          <path id="path7062" class="path" d="M 300,180 L 350,180 L 300,260 Z"></path>
+          <path id="path7064" class="path" d="M 250,180 L 300,260 L 250,340 Z"></path>
+          <path id="path7065" class="path" d="M 350,180 L 300,260 L 350,340 Z"></path>
+          <path id="path7066" class="path" d="M 250,340 L 300,260 L 300,340 Z"></path>
+          <path id="path7067" class="path" d="M 350,340 L 300,260 L 300,340 Z"></path>
+          <path id="path7068" class="path" d="M 120,340 L 250,340 L 250,390 Z"></path>
+          <path id="path7069" class="path" d="M 120,340 L 250,390 L 120,390 Z"></path>
+          <path id="path7070" class="path" d="M 120,390 L 250,390 L 120,440 Z"></path>
+          <path id="path7071" class="path" d="M 120,440 L 250,390 L 250,440 Z"></path>
+          <path id="path7072" class="path" d="M 350,340 L 480,340 L 350,390 Z"></path>
+          <path id="path7076" class="path" d="M 480,340 L 480,390 L 350,390 Z"></path>
+          <path id="path7080" class="path" d="M 350,390 L 480,390 L 480,440 Z"></path>
+          <path id="path7081" class="path" d="M 350,390 L 480,440 L 350,440 Z"></path>
+          <path id="path7086" class="path" d="M 250,340 L 300,340 L 300,390 Z"></path>
+          <path id="path7088" class="path" d="M 250,340 L 300,390 L 250,390 Z"></path>
+          <path id="path7090" class="path" d="M 250,390 L 300,390 L 250,440 Z"></path>
+          <path id="path7091" class="path" d="M 250,440 L 300,390 L 300,440 Z"></path>
+          <path id="path7092" class="path" d="M 300,340 L 350,340 L 300,390 Z"></path>
+          <path id="path7094" class="path" d="M 350,340 L 350,390 L 300,390 Z"></path>
+          <path id="path7096" class="path" d="M 300,390 L 350,390 L 350,440 Z"></path>
+          <path id="path7098" class="path" d="M 300,390 L 350,440 L 300,440 Z"></path>
+          <path id="path7100" class="path" d="M 250,440 L 300,440 L 300,560 Z"></path>
+          <path id="path7101" class="path" d="M 250,440 L 300,560 L 250,560 Z"></path>
+          <path id="path7102" class="path" d="M 300,440 L 350,440 L 300,560 Z"></path>
+          <path id="path7104" class="path" d="M 350,440 L 350,560 L 300,560 Z"></path>
+          <path id="path7105" class="path" d="M 250,560 L 300,560 L 300,780 Z"></path>
+          <path id="path7106" class="path" d="M 250,560 L 300,780 L 250,780 Z"></path>
+          <path id="path7107" class="path" d="M 300,560 L 350,560 L 300,780 Z"></path>
+          <path id="path7108" class="path" d="M 350,560 L 350,780 L 300,780 Z"></path>
+        </svg>
+      </div>
+      <div class="loading">
+        <span data-l>S</span><span data-l>T</span><span data-l>.</span>
+        <span data-l>M</span><span data-l>O</span><span data-l>N</span><span data-l>I</span><span data-l>C</span><span data-l>A</span>
+        <br>
+        <span data-l>Y</span><span data-l>O</span><span data-l>U</span><span data-l>T</span><span data-l>H</span>
+        <br>
+        <span data-l>O</span><span data-l>N</span><span data-l>G</span><span data-l>A</span><span data-l>T</span><span data-l>A</span>&nbsp;<span data-l>R</span><span data-l>O</span><span data-l>N</span><span data-l>G</span><span data-l>A</span><span data-l>I</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGIN OVERLAY -->
+  <div class="admin-login-overlay" data-admin-login>
+    <div class="admin-login-box">
+      <div class="admin-login-icon">✝</div>
+      <h2 class="admin-login-title">Admin Login</h2>
+      <p class="admin-login-sub">St. Monica Catholic Youth Parish</p>
+      <div class="admin-login-form">
+        <div class="admin-login-field">
+          <label>Username</label>
+          <input type="text" data-admin-login-user autocomplete="username" placeholder="admin">
+        </div>
+        <div class="admin-login-field">
+          <label>Password</label>
+          <input type="password" data-admin-login-pass autocomplete="current-password" placeholder="••••••••">
+        </div>
+        <div class="admin-login-error" data-admin-login-error></div>
+        <button class="admin-login-btn" data-admin-login-btn>Sign In</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-wrap" data-admin-wrap>
+    <button class="admin-sidebar-toggle" data-sidebar-toggle aria-label="Toggle sidebar">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="admin-sidebar-overlay" data-sidebar-overlay></div>
+    <aside class="admin-sidebar" data-admin-sidebar>
+      <div class="admin-brand">
+        <span class="admin-brand-cross">✝</span>
+        <span class="admin-brand-text">Admin Panel</span>
+      </div>
+      <nav class="admin-nav">
+        <button class="admin-nav-btn is-active" data-admin-tab="dashboard">Dashboard</button>
+        <div class="admin-nav-group">
+          <button class="admin-nav-btn admin-nav-parent" data-admin-parent="index">
+            <span>Landing Page</span>
+            <span class="admin-nav-arrow">▾</span>
+          </button>
+          <div class="admin-nav-sub" data-admin-sub="index">
+            <button class="admin-nav-sub-btn" data-admin-tab="index">Content</button>
+            <button class="admin-nav-sub-btn" data-admin-tab="programs">Programs</button>
+          </div>
+        </div>
+        <button class="admin-nav-btn" data-admin-tab="events">Events</button>
+        <button class="admin-nav-btn" data-admin-tab="gallery">Gallery</button>
+        <button class="admin-nav-btn" data-admin-tab="spotlight">Spotlight</button>
+        <div class="admin-nav-group">
+          <button class="admin-nav-btn admin-nav-parent" data-admin-parent="sports">
+            <span>Sports</span>
+            <span class="admin-nav-arrow">▾</span>
+          </button>
+          <div class="admin-nav-sub" data-admin-sub="sports">
+            <button class="admin-nav-sub-btn" data-admin-tab="sports">Match Results</button>
+            <button class="admin-nav-sub-btn" data-admin-tab="football_squad">Football Squad</button>
+            <button class="admin-nav-sub-btn" data-admin-tab="football_stats">Football Stats</button>
+            <button class="admin-nav-sub-btn" data-admin-tab="hof">Hall of Fame</button>
+          </div>
+        </div>
+        <div class="admin-nav-group">
+          <button class="admin-nav-btn admin-nav-parent" data-admin-parent="community">
+            <span>Community</span>
+            <span class="admin-nav-arrow">▾</span>
+          </button>
+          <div class="admin-nav-sub" data-admin-sub="community">
+            <button class="admin-nav-sub-btn" data-admin-tab="leadership">Leadership</button>
+            <button class="admin-nav-sub-btn" data-admin-tab="families">Families</button>
+          </div>
+        </div>
+      </nav>
+      <div class="admin-sidebar-footer">
+        <div class="admin-sidebar-footer-row">
+          <button class="nav-theme-toggle" data-theme-toggle aria-label="Toggle theme">🌙</button>
+          <a href="/" class="admin-back-link">← Back to site</a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="admin-main" data-admin-main>
+
+      <!-- DASHBOARD -->
+      <section class="admin-section is-active" data-admin-section="dashboard">
+        <div class="admin-section-header">
+          <h2 class="admin-section-title">Dashboard</h2>
+          <p class="admin-section-desc">Overview of all content on the website</p>
+        </div>
+        <div class="admin-cards">
+          <div class="admin-stat-card">
+            <span class="admin-stat-value" data-dashboard-events>0</span>
+            <span class="admin-stat-label">Events</span>
+          </div>
+          <div class="admin-stat-card">
+            <span class="admin-stat-value" data-dashboard-gallery>0</span>
+            <span class="admin-stat-label">Gallery Highlights</span>
+          </div>
+          <div class="admin-stat-card">
+            <span class="admin-stat-value" data-dashboard-spotlight>0</span>
+            <span class="admin-stat-label">Spotlight Entries</span>
+          </div>
+          <div class="admin-stat-card">
+            <span class="admin-stat-value" data-dashboard-sports>0</span>
+            <span class="admin-stat-label">Match Results</span>
+          </div>
+          <div class="admin-stat-card">
+            <span class="admin-stat-value" data-dashboard-football-squad>0</span>
+            <span class="admin-stat-label">Squad Players</span>
+          </div>
+          <div class="admin-stat-card">
+            <span class="admin-stat-value" data-dashboard-leadership>0</span>
+            <span class="admin-stat-label">Leadership</span>
+          </div>
+          <div class="admin-stat-card">
+            <span class="admin-stat-value" data-dashboard-families>0</span>
+            <span class="admin-stat-label">Family Members</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- EVENTS -->
+      <section class="admin-section" data-admin-section="events">
+        <div class="admin-section-header">
+          <h2 class="admin-section-title">Events</h2>
+          <p class="admin-section-desc">Manage events — add, edit, or delete</p>
+          <button class="admin-add-btn" data-admin-add="events">+ Add Event</button>
+        </div>
+
+        <div class="admin-form" data-admin-form="events" style="display:none;">
+          <h3 class="admin-form-title" data-form-title="events">New Event</h3>
+          <input type="hidden" data-field="events-id">
+          <div class="admin-form-grid">
+            <div class="admin-field">
+              <label>Title</label>
+              <input type="text" data-field="events-title" placeholder="Youth Night Worship">
+            </div>
+            <div class="admin-field">
+              <label>Date</label>
+              <input type="date" data-field="events-date">
+            </div>
+            <div class="admin-field">
+              <label>Time</label>
+              <input type="text" data-field="events-time" placeholder="6:00 PM">
+            </div>
+            <div class="admin-field">
+              <label>Location</label>
+              <input type="text" data-field="events-location" placeholder="Parish Hall">
+            </div>
+            <div class="admin-field">
+              <label>Duration (hours)</label>
+              <input type="number" data-field="events-duration" value="2" min="1" max="24">
+            </div>
+            <div class="admin-field" style="display:flex;align-items:center;gap:0.5em;padding-top:0.5em;">
+              <input type="checkbox" data-field="events-homepage" id="events-homepage" style="width:auto;margin:0;">
+              <label for="events-homepage" style="margin:0;cursor:pointer;">Show on Homepage</label>
+            </div>
+            <div class="admin-field admin-field-wide">
+              <label>Description</label>
+              <textarea data-field="events-description" rows="2" placeholder="Event description..."></textarea>
+            </div>
+            <div class="admin-field admin-field-wide">
+              <label>Image URL</label>
+              <div class="admin-upload-row">
+                <input type="text" data-field="events-image" placeholder="/images/event.jpg">
+                <button class="admin-upload-btn" data-upload-target="events-image" title="Upload image">+</button>
+                <button class="admin-browse-btn" data-browse-target="events-image" title="Browse images">📁</button>
+                <input type="file" accept="image/*" multiple data-upload-input="events-image" style="display:none">
+              </div>
+            </div>
+          </div>
+          <div class="admin-form-actions">
+            <button class="admin-btn admin-btn-primary" data-admin-save="events">Save</button>
+            <button class="admin-btn admin-btn-outline" data-admin-cancel="events">Cancel</button>
+          </div>
+        </div>
+
+        <div class="admin-list" data-admin-list="events">
+          <div class="admin-list-empty">No events yet. Click "Add Event" to create one.</div>
+        </div>
+      </section>
+
+      <!-- GALLERY -->
+      <section class="admin-section" data-admin-section="gallery">
+        <div class="admin-section-header">
+          <h2 class="admin-section-title">Gallery Highlights</h2>
+          <p class="admin-section-desc">Manage photo gallery highlights</p>
+          <button class="admin-add-btn" data-admin-add="gallery">+ Add Highlight</button>
+        </div>
+
+        <div class="admin-form" data-admin-form="gallery" style="display:none;">
+          <h3 class="admin-form-title" data-form-title="gallery">New Highlight</h3>
+          <input type="hidden" data-field="gallery-id">
+          <div class="admin-form-grid">
+            <div class="admin-field admin-field-wide">
+              <label>Title</label>
+              <input type="text" data-field="gallery-title" placeholder="Youth Night Worship">
+            </div>
+            <div class="admin-field">
+              <label>Meta</label>
+              <input type="text" data-field="gallery-meta" placeholder="Jun 15 · 6:00 PM">
+            </div>
+            <div class="admin-field admin-field-wide">
+              <label>Image URLs (comma-separated)</label>
+              <div class="admin-upload-row">
+                <textarea data-field="gallery-images" rows="2" placeholder="/images/koh-01.jpeg, /images/koh-02.jpeg"></textarea>
+                <button class="admin-upload-btn" data-upload-target="gallery-images" title="Upload image">+</button>
+                <button class="admin-browse-btn" data-browse-target="gallery-images" title="Browse images">📁</button>
+                <input type="file" accept="image/*" multiple data-upload-input="gallery-images" style="display:none">
+              </div>
+              <div class="admin-image-preview" data-gallery-preview></div>
+            </div>
+          </div>
+          <div class="admin-form-actions">
+            <button class="admin-btn admin-btn-primary" data-admin-save="gallery">Save</button>
+            <button class="admin-btn admin-btn-outline" data-admin-cancel="gallery">Cancel</button>
+          </div>
+        </div>
+
+        <div class="admin-list" data-admin-list="gallery">
+          <div class="admin-list-empty">No gallery highlights yet.</div>
+        </div>
+      </section>
+
+      <!-- SPOTLIGHT -->
+      <section class="admin-section" data-admin-section="spotlight">
+        <div class="admin-section-header">
+          <h2 class="admin-section-title">Community Spotlight</h2>
+          <p class="admin-section-desc">Manage spotlight entries for the Awards page</p>
+          <button class="admin-add-btn" data-admin-add="spotlight">+ Add Entry</button>
+        </div>
+
+        <div class="admin-form" data-admin-form="spotlight" style="display:none;">
+          <h3 class="admin-form-title" data-form-title="spotlight">New Spotlight Entry</h3>
+          <input type="hidden" data-field="spotlight-id">
+          <div class="admin-form-grid">
+            <div class="admin-field">
+              <label>Type</label>
+              <select data-field="spotlight-type">
+                <option value="sports-mvp">Sports MVP</option>
+                <option value="funniest-pic">Funniest Pic</option>
+                <option value="best-picture">Best Picture</option>
+                <option value="best-moment">Best Moment</option>
+                <option value="best-dressed">Best Dressed</option>
+                <option value="most-active">Most Active</option>
+              </select>
+            </div>
+            <div class="admin-field">
+              <label>Date</label>
+              <input type="text" data-field="spotlight-date" placeholder="Mar 15, 2025">
+            </div>
+            <div class="admin-field admin-field-wide">
+              <label>Event</label>
+              <input type="text" data-field="spotlight-event" placeholder="Youth Football Tournament">
+            </div>
+            <div class="admin-field admin-field-wide">
+              <label>Title</label>
+              <input type="text" data-field="spotlight-title" placeholder="Michael Omondi">
+            </div>
+            <div class="admin-field admin-field-wide">
+              <label>Subtitle</label>
+              <input type="text" data-field="spotlight-subtitle" placeholder="3 goals in the championship final">
+            </div>
+            <div class="admin-field admin-field-wide">
+              <label>Image URL</label>
+              <div class="admin-upload-row">
+                <input type="text" data-field="spotlight-image" placeholder="/images/koh-01.jpeg">
+                <button class="admin-upload-btn" data-upload-target="spotlight-image" title="Upload image">+</button>
+                <button class="admin-browse-btn" data-browse-target="spotlight-image" title="Browse images">📁</button>
+                <input type="file" accept="image/*" multiple data-upload-input="spotlight-image" style="display:none">
+              </div>
+            </div>
+          </div>
+          <div class="admin-form-actions">
+            <button class="admin-btn admin-btn-primary" data-admin-save="spotlight">Save</button>
+            <button class="admin-btn admin-btn-outline" data-admin-cancel="spotlight">Cancel</button>
+          </div>
+        </div>
+
+        <div class="admin-list" data-admin-list="spotlight">
+          <div class="admin-list-empty">No spotlight entries yet.</div>
+        </div>
+      </section>
+
+      <!-- SPORTS -->
+      <section class="admin-section" data-admin-section="sports">
+        <div class="admin-section-header">
+          <h2 class="admin-section-title">Match Results</h2>
+          <p class="admin-section-desc">Manage match results and fixtures</p>
+          <button class="admin-add-btn" data-admin-add="sports">+ Add Match</button>
+        </div>
+
+        <div class="admin-form" data-admin-form="sports" style="display:none;">
+          <h3 class="admin-form-title" data-form-title="sports">New Match</h3>
+          <input type="hidden" data-field="sports-id">
+          <div class="admin-form-grid">
+            <div class="admin-field">
+              <label>Sport</label>
+              <select data-field="sports-sport">
+                <option value="football">Football</option>
+                <option value="basketball">Basketball</option>
+                <option value="athletics">Athletics</option>
+                <option value="volleyball">Volleyball</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="admin-field">
+              <label>Date</label>
+              <input type="date" data-field="sports-date">
+            </div>
+            <div class="admin-field">
+              <label>Competition</label>
+              <input type="text" data-field="sports-competition" placeholder="Deanery League">
+            </div>
+            <div class="admin-field">
+              <label>Team (Left Side)</label>
+              <input type="text" data-field="sports-team1" placeholder="St. Monica">
+            </div>
+            <div class="admin-field">
+              <label>Team (Right Side)</label>
+              <input type="text" data-field="sports-team2" placeholder="Opponent">
+            </div>
+            <div class="admin-field">
+              <label>Score (Left)</label>
+              <input type="number" data-field="sports-score1" value="0" min="0">
+            </div>
+            <div class="admin-field">
+              <label>Score (Right)</label>
+              <input type="number" data-field="sports-score2" value="0" min="0">
+            </div>
+            <div class="admin-field admin-field-wide">
+              <label>Goal Scorers (Left Team)</label>
+              <input type="text" data-field="sports-notes" placeholder='e.g. Luke 23&apos;, David 57&apos;, Joseph 81&apos; (pen), Thomas 67&apos; missed'>
+            </div>
+            <div class="admin-field admin-field-wide">
+              <label>Goal Scorers (Right Team)</label>
+              <input type="text" data-field="sports-notes2" placeholder='e.g. Mark 43&apos;, Andrew 89&apos; (pen)'>
+            </div>
+          </div>
+          <div class="admin-form-actions">
+            <button class="admin-btn admin-btn-primary" data-admin-save="sports">Save</button>
+            <button class="admin-btn admin-btn-outline" data-admin-cancel="sports">Cancel</button>
+          </div>
+        </div>
+
+        <div class="admin-list" data-admin-list="sports">
+          <div class="admin-list-empty">No match results yet.</div>
+        </div>
+      </section>
+
+      <!-- HALL OF FAME -->
+      <section class="admin-section" data-admin-section="hof">
+        <div class="admin-section-header">
+          <h2 class="admin-section-title">Hall of Fame</h2>
+          <p class="admin-section-desc">Manage Hall of Fame entries for the competitions page</p>
+          <button class="admin-add-btn" data-admin-add="hof">+ Add Entry</button>
+        </div>
+        <div class="admin-form" data-admin-form="hof" style="display:none;">
+          <h3 class="admin-form-title" data-form-title="hof">New Entry</h3>
+          <input type="hidden" data-field="hof-id">
+          <div class="admin-form-grid">
+            <div class="admin-field">
+              <label>Icon</label>
+              <input type="text" data-field="hof-icon" placeholder="🏆">
+            </div>
+            <div class="admin-field">
+              <label>Year</label>
+              <input type="text" data-field="hof-year" placeholder="2025">
+            </div>
+            <div class="admin-field admin-field-wide">
+              <label>Title</label>
+              <input type="text" data-field="hof-title" placeholder="Parish Cup Champions">
+            </div>
+            <div class="admin-field admin-field-wide">
+              <label>Description</label>
+              <textarea data-field="hof-desc" rows="2" placeholder="Achievement description..."></textarea>
+            </div>
+          </div>
+          <div class="admin-form-actions">
+            <button class="admin-btn admin-btn-primary" data-admin-save="hof">Save</button>
+            <button class="admin-btn admin-btn-outline" data-admin-cancel="hof">Cancel</button>
+          </div>
+        </div>
+        <div class="admin-list" data-admin-list="hof">
+          <div class="admin-list-empty">No entries yet.</div>
+        </div>
+      </section>
+
+      <!-- FOOTBALL STATS -->
+      <section class="admin-section" data-admin-section="football_stats">
+        <div class="admin-section-header">
+          <h2 class="admin-section-title">Football Stats</h2>
+          <p class="admin-section-desc">Edit the stats counters shown on the football page</p>
+        </div>
+        <div class="admin-form" data-admin-form="football_stats">
+          <h3 class="admin-form-title">Stats</h3>
+          <div class="admin-form-grid">
+            <div class="admin-field">
+              <label>Matches Played</label>
+              <input type="number" data-field="football_stats-matches" min="0">
+            </div>
+            <div class="admin-field">
+              <label>Goals Scored</label>
+              <input type="number" data-field="football_stats-goals" min="0">
+            </div>
+            <div class="admin-field">
+              <label>Clean Sheets</label>
+              <input type="number" data-field="football_stats-cleanSheets" min="0">
+            </div>
+            <div class="admin-field">
+              <label>Trophies Won</label>
+              <input type="number" data-field="football_stats-trophies" min="0">
+            </div>
+          </div>
+          <div class="admin-form-actions">
+            <button class="admin-btn admin-btn-primary" data-admin-save="football_stats">Save</button>
+            <button class="admin-btn admin-btn-outline" data-admin-cancel="football_stats">Cancel</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTBALL SQUAD -->
+        <section class="admin-section" data-admin-section="football_squad">
+          <div class="admin-section-header">
+            <h2 class="admin-section-title">Football Squad</h2>
+            <p class="admin-section-desc">Manage player names, numbers, photos, positions, and stats</p>
+          </div>
+
+          <div class="admin-form" data-admin-form="football_squad" style="display:none;">
+            <h3 class="admin-form-title" data-form-title="football_squad">Edit Player</h3>
+            <input type="hidden" data-field="football_squad-id">
+            <div class="admin-form-grid">
+              <div class="admin-field">
+                <label>Player ID</label>
+                <input type="text" data-field="football_squad-id" readonly style="opacity:0.6;">
+              </div>
+              <div class="admin-field">
+                <label>Name</label>
+                <input type="text" data-field="football_squad-name" placeholder="Player name">
+              </div>
+              <div class="admin-field">
+                <label>Number</label>
+                <input type="number" data-field="football_squad-num" min="1" max="99">
+              </div>
+              <div class="admin-field">
+                <label>Position</label>
+                <input type="text" data-field="football_squad-position" placeholder="e.g. ST, LW/ST, CM">
+              </div>
+              <div class="admin-field">
+                <label>Rating</label>
+                <input type="number" data-field="football_squad-rating" min="1" max="99" value="75">
+              </div>
+              <div class="admin-field admin-field-wide">
+                <label>Image URL</label>
+                <div class="admin-upload-row">
+                  <input type="text" data-field="football_squad-img" placeholder="/uploads/player.jpg">
+                  <button class="admin-upload-btn" data-upload-target="football_squad-img" title="Upload image">+</button>
+                  <button class="admin-browse-btn" data-browse-target="football_squad-img" title="Browse images">📁</button>
+                  <input type="file" accept="image/*" multiple data-upload-input="football_squad-img" style="display:none">
+                </div>
+              </div>
+            </div>
+
+            <h4 style="font-family:var(--font-display);font-size:1em;margin:1em 0 0.5em;color:var(--gold);border-bottom:1px solid var(--border);padding-bottom:0.4em;">Outfield Stats</h4>
+            <div class="admin-form-grid admin-stats-grid">
+              <div class="admin-field">
+                <label>Pace</label>
+                <input type="number" data-field="football_squad-stat_pace" min="1" max="99" value="50">
+              </div>
+              <div class="admin-field">
+                <label>Shooting</label>
+                <input type="number" data-field="football_squad-stat_shooting" min="1" max="99" value="50">
+              </div>
+              <div class="admin-field">
+                <label>Passing</label>
+                <input type="number" data-field="football_squad-stat_passing" min="1" max="99" value="50">
+              </div>
+              <div class="admin-field">
+                <label>Dribbling</label>
+                <input type="number" data-field="football_squad-stat_dribbling" min="1" max="99" value="50">
+              </div>
+              <div class="admin-field">
+                <label>Defending</label>
+                <input type="number" data-field="football_squad-stat_defending" min="1" max="99" value="50">
+              </div>
+              <div class="admin-field">
+                <label>Physical</label>
+                <input type="number" data-field="football_squad-stat_physical" min="1" max="99" value="50">
+              </div>
+            </div>
+
+            <h4 style="font-family:var(--font-display);font-size:1em;margin:1em 0 0.5em;color:var(--gold);border-bottom:1px solid var(--border);padding-bottom:0.4em;">Goalkeeper Stats</h4>
+            <div class="admin-form-grid admin-stats-grid">
+              <div class="admin-field">
+                <label>Diving</label>
+                <input type="number" data-field="football_squad-stat_diving" min="1" max="99" value="50">
+              </div>
+              <div class="admin-field">
+                <label>Handling</label>
+                <input type="number" data-field="football_squad-stat_handling" min="1" max="99" value="50">
+              </div>
+              <div class="admin-field">
+                <label>Kicking</label>
+                <input type="number" data-field="football_squad-stat_kicking" min="1" max="99" value="50">
+              </div>
+              <div class="admin-field">
+                <label>Reflexes</label>
+                <input type="number" data-field="football_squad-stat_reflexes" min="1" max="99" value="50">
+              </div>
+              <div class="admin-field">
+                <label>Speed</label>
+                <input type="number" data-field="football_squad-stat_speed" min="1" max="99" value="50">
+              </div>
+              <div class="admin-field">
+                <label>Positioning</label>
+                <input type="number" data-field="football_squad-stat_positioning" min="1" max="99" value="50">
+              </div>
+            </div>
+
+            <div class="admin-form-actions">
+              <button class="admin-btn admin-btn-primary" data-admin-save="football_squad">Save</button>
+              <button class="admin-btn admin-btn-outline" data-admin-cancel="football_squad">Cancel</button>
+            </div>
+          </div>
+
+        <div class="admin-list" data-admin-list="football_squad">
+          <div class="admin-list-empty">Loading squad...</div>
+        </div>
+      </section>
+
+      <!-- INDEX PAGE -->
+      <section class="admin-section" data-admin-section="index">
+        <div class="admin-section-header">
+          <h2 class="admin-section-title">Landing Page</h2>
+          <p class="admin-section-desc">Manage events and gallery photos displayed on the homepage</p>
+        </div>
+
+        <h3 style="font-family:var(--font-display);font-size:1.15em;margin:1.5em 0 0.75em;color:#2c2420;">3D Sphere Photos</h3>
+        <p style="font-size:0.85em;color:var(--text-muted);margin:0 0 1em;">These photos appear in the rotating 3D sphere on the landing page.</p>
+        <div class="index-gallery-grid" data-index-sphere-grid></div>
+        <div style="display:flex;gap:0.5em;flex-wrap:wrap;margin-top:1em;">
+          <input type="text" data-index-sphere-url placeholder="/images/photo.jpg" style="flex:1;min-width:180px;font-family:var(--font-body);font-size:0.9em;padding:0.55em 0.7em;border:1.5px solid #ddd6cc;border-radius:8px;background:#fcfaf8;color:#2c2416;">
+          <button class="admin-add-btn" data-index-sphere-add style="margin:0;">+ Add to Sphere</button>
+          <button class="admin-btn admin-btn-outline" data-index-sphere-upload style="margin:0;font-size:0.85em;padding:0.55em 1.2em;">Upload</button>
+          <input type="file" accept="image/*" data-index-sphere-file style="display:none">
+        </div>
+
+        <h3 style="font-family:var(--font-display);font-size:1.15em;margin:1.5em 0 0.75em;color:#2c2420;">Photo Grid</h3>
+        <p style="font-size:0.85em;color:var(--text-muted);margin:0 0 1em;">These photos appear in the static grid below the sphere.</p>
+        <div class="index-gallery-grid" data-index-grid-grid></div>
+        <div style="display:flex;gap:0.5em;flex-wrap:wrap;margin-top:1em;">
+          <input type="text" data-index-grid-url placeholder="/images/photo.jpg" style="flex:1;min-width:180px;font-family:var(--font-body);font-size:0.9em;padding:0.55em 0.7em;border:1.5px solid #ddd6cc;border-radius:8px;background:#fcfaf8;color:#2c2416;">
+          <button class="admin-add-btn" data-index-grid-add style="margin:0;">+ Add to Grid</button>
+          <button class="admin-btn admin-btn-outline" data-index-grid-upload style="margin:0;font-size:0.85em;padding:0.55em 1.2em;">Upload</button>
+          <input type="file" accept="image/*" data-index-grid-file style="display:none">
+        </div>
+      </section>
+
+      <!-- PROGRAMS -->
+      <section class="admin-section" data-admin-section="programs">
+        <div class="admin-section-header">
+          <h2 class="admin-section-title">Youth Programs</h2>
+          <p class="admin-section-desc">Manage programs displayed on the landing page</p>
+          <button class="admin-add-btn" data-admin-programs-add>+ Add Program</button>
+        </div>
+
+        <div class="admin-form" data-admin-form="programs" style="display:none;">
+          <h3 class="admin-form-title" data-form-title="programs">New Program</h3>
+          <input type="hidden" data-field="programs-id">
+          <div class="admin-form-grid">
+            <div class="admin-field">
+              <label>Title</label>
+              <input type="text" data-field="programs-title" placeholder="Faith Formation">
+            </div>
+            <div class="admin-field admin-field-wide">
+              <label>Description</label>
+              <textarea data-field="programs-desc" rows="2" placeholder="Program description..."></textarea>
+            </div>
+            <div class="admin-field admin-field-wide">
+              <label>Meta (e.g. schedule)</label>
+              <input type="text" data-field="programs-meta" placeholder="Wednesdays • 6:30 PM">
+            </div>
+          </div>
+          <div class="admin-form-actions">
+            <button class="admin-btn admin-btn-primary" data-admin-save="programs">Save</button>
+            <button class="admin-btn admin-btn-outline" data-admin-cancel="programs">Cancel</button>
+          </div>
+        </div>
+
+        <div class="admin-list" data-admin-list="programs">
+          <div class="admin-list-empty">No programs yet. Click "Add Program" to create one.</div>
+        </div>
+      </section>
+
+      <!-- LEADERSHIP -->
+      <section class="admin-section" data-admin-section="leadership">
+        <div class="admin-section-header">
+          <h2 class="admin-section-title">Leadership Team</h2>
+          <p class="admin-section-desc">Manage executive team member names, roles, quotes, and photos</p>
+          <button class="admin-add-btn" data-admin-leadership-add>+ Add Role</button>
+        </div>
+
+        <div class="admin-form" data-admin-form="leadership" style="display:none;">
+          <h3 class="admin-form-title" data-form-title="leadership">Edit Leader</h3>
+          <input type="hidden" data-field="leadership-id">
+          <div class="admin-form-grid">
+            <div class="admin-field">
+              <label>Name</label>
+              <input type="text" data-field="leadership-name" placeholder="Full name">
+            </div>
+            <div class="admin-field">
+              <label>Role Title</label>
+              <input type="text" data-field="leadership-role" placeholder="Chairperson">
+            </div>
+            <div class="admin-field admin-field-wide">
+              <label>Quote</label>
+              <textarea data-field="leadership-quote" rows="2" placeholder='"Quote text..."'></textarea>
+            </div>
+            <div class="admin-field admin-field-wide">
+              <label>Photo URL</label>
+              <div class="admin-upload-row">
+                <input type="text" data-field="leadership-img" placeholder="/uploads/leader.jpg (leave blank for initials)">
+                <button class="admin-upload-btn" data-upload-target="leadership-img" title="Upload image">+</button>
+                <button class="admin-browse-btn" data-browse-target="leadership-img" title="Browse images">📁</button>
+                <input type="file" accept="image/*" multiple data-upload-input="leadership-img" style="display:none">
+              </div>
+            </div>
+          </div>
+          <div class="admin-form-actions">
+            <button class="admin-btn admin-btn-primary" data-admin-save="leadership">Save</button>
+            <button class="admin-btn admin-btn-outline" data-admin-cancel="leadership">Cancel</button>
+          </div>
+        </div>
+
+        <div class="admin-list" data-admin-list="leadership">
+          <div class="admin-list-empty">Loading leadership...</div>
+        </div>
+      </section>
+
+      <!-- FAMILIES -->
+      <section class="admin-section" data-admin-section="families">
+        <div class="admin-section-header">
+          <h2 class="admin-section-title">Community Families</h2>
+          <p class="admin-section-desc">Manage family member names for the community tree</p>
+        </div>
+        <div class="admin-list" data-admin-families-list>
+          <div class="admin-list-empty">Loading families...</div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ATTENDEE MODAL -->
+  <div class="rsvp-overlay" data-attendee-overlay>
+    <div class="rsvp-modal" style="max-width:560px;">
+      <span class="rsvp-modal-cross">✝</span>
+      <h3 data-attendee-title>Attendees</h3>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1em;">
+        <p style="margin:0;font-size:0.85em;color:var(--text-muted);" data-attendee-count></p>
+        <button class="admin-btn admin-btn-primary" data-attendee-pdf style="font-size:0.8em;padding:0.5em 1em;">Download PDF</button>
+      </div>
+      <div style="max-height:300px;overflow-y:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.85em;">
+          <thead>
+            <tr style="background:#f0e8d8;">
+              <th style="padding:0.5em;text-align:left;color:var(--text-secondary);">#</th>
+              <th style="padding:0.5em;text-align:left;color:var(--text-secondary);">Name</th>
+              <th style="padding:0.5em;text-align:left;color:var(--text-secondary);">Phone</th>
+              <th style="padding:0.5em;text-align:left;color:var(--text-secondary);">Date</th>
+            </tr>
+          </thead>
+          <tbody data-attendee-list></tbody>
+        </table>
+      </div>
+      <div style="text-align:center;margin-top:1em;">
+        <button class="admin-btn admin-btn-outline" data-attendee-close>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMAGE BROWSER -->
+  <div class="rsvp-overlay" data-browser-overlay>
+    <div class="rsvp-modal" style="max-width:640px;padding:2em;">
+      <span class="rsvp-modal-cross">✝</span>
+      <h3 style="margin:0 0 0.25em;">Image Browser</h3>
+      <p style="margin:0 0 1em;font-size:0.85em;color:var(--text-muted);">Click an image to insert its URL, or upload a new one</p>
+      <div style="display:flex;gap:0.5em;margin-bottom:1em;">
+        <label class="admin-browse-upload-btn" style="display:inline-flex;align-items:center;gap:0.4em;padding:0.5em 1em;border-radius:6px;cursor:pointer;font-size:0.85em;background:#c8963e;color:#fff;">
+          + Upload New
+          <input type="file" accept="image/*" multiple data-browser-upload style="display:none">
+        </label>
+      </div>
+      <div style="max-height:360px;overflow-y:auto;">
+        <div class="browser-grid" data-browser-grid></div>
+      </div>
+      <div style="text-align:center;margin-top:1em;">
+        <button class="admin-btn admin-btn-outline" data-browser-close>Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/js/admin.js"></script>
+</body>
+</html>
