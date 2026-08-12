@@ -29,11 +29,6 @@ export const adminApi = {
       localStorage.setItem('stm_admin_token', authToken);
       return true;
     } catch {
-      if (username === 'admin' && password === '@Gr4ktung978') {
-        authToken = 'fallback-token';
-        localStorage.setItem('stm_admin_token', authToken);
-        return true;
-      }
       return false;
     }
   },
@@ -197,4 +192,5 @@ export const adminApi = {
       return true;
     }
   },
+
 };

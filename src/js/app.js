@@ -92,6 +92,54 @@ function hexToRgb(hex) {
   return `${r}, ${g}, ${b}`;
 }
 
+function initHeroSlider() {
+  const container = document.querySelector('[data-hero-slider]');
+  if (!container) return;
+  const slides = container.querySelectorAll('[data-hero-slide]');
+  const dotsContainer = container.querySelector('[data-hero-dots]');
+  if (!slides.length) return;
+
+  let current = 0;
+  let interval;
+
+  dotsContainer.innerHTML = '';
+  slides.forEach((_, i) => {
+    const dot = document.createElement('span');
+    dot.className = 'hero-slider-dot' + (i === 0 ? ' is-active' : '');
+    dot.addEventListener('click', () => goTo(i));
+    dotsContainer.appendChild(dot);
+  });
+  const dots = dotsContainer.querySelectorAll('.hero-slider-dot');
+
+  function goTo(index) {
+    slides.forEach(s => s.classList.remove('is-active'));
+    dots.forEach(d => d.classList.remove('is-active'));
+    current = index;
+    slides[current].classList.add('is-active');
+    dots[current].classList.add('is-active');
+  }
+
+  function next() { goTo((current + 1) % slides.length); }
+
+  function startAuto() { interval = setInterval(next, 5000); }
+  function stopAuto() { clearInterval(interval); }
+
+  startAuto();
+
+  let touchStartX = 0;
+  let touchEndX = 0;
+  container.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; stopAuto(); }, { passive: true });
+  container.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) next();
+      else goTo((current - 1 + slides.length) % slides.length);
+    }
+    startAuto();
+  }, { passive: true });
+}
+
 async function init() {
   setViewportProps();
   const { lenis } = initLenis();
@@ -105,6 +153,7 @@ async function init() {
   }, 100);
 
   const hero = initHero();
+  initHeroSlider();
   initAbout();
   initEvents();
   initGallery();

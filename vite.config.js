@@ -12,7 +12,13 @@ const PAGE_MAP = {
   '/community': '/community.html',
   '/trivia': '/trivia.html',
   '/spotlight': '/spotlight.html',
-   '/s3s4m3': '/s3s4m3.html',
+  '/register': '/auth.html',
+  '/login': '/auth.html',
+  '/verify': '/verify.html',
+  '/s3s4m3': '/s3s4m3.html',
+  '/santa-profile': '/santa-profile.html',
+  '/santa-users': '/santa-users.html',
+  '/profile': '/profile.html',
   '/sports/football': '/sports/football/index.html',
   '/sports/competitions': '/sports/competitions/index.html',
 };
@@ -41,7 +47,12 @@ export default defineConfig({
         community: resolve(ROOT, 'community.html'),
         trivia: resolve(ROOT, 'trivia.html'),
         spotlight: resolve(ROOT, 'spotlight.html'),
+        auth: resolve(ROOT, 'auth.html'),
+        verify: resolve(ROOT, 'verify.html'),
         s3s4m3: resolve(ROOT, 's3s4m3.html'),
+        'santa-profile': resolve(ROOT, 'santa-profile.html'),
+        'santa-users': resolve(ROOT, 'santa-users.html'),
+        profile: resolve(ROOT, 'profile.html'),
       },
       output: {
         manualChunks(id) {

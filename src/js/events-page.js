@@ -5,6 +5,7 @@ import { initLoader } from './loader.js';
 import { initInertia } from './utils/inertia.js';
 import { initCalendarButtons } from './calendar.js';
 import { loadList } from './utils/data.js';
+import { requireAuth } from './auth-gate.js';
 
 const EVENT_DEFAULTS = [];
 
@@ -38,20 +39,24 @@ function renderCard(event) {
 
   const frontActions = isFinished
     ? `<span class="event-card-finished">Event Ended</span>`
-    : `<button class="button button-sm event-card-btn" data-flip-btn>${btnLabel}</button>
-      <button class="event-card-calendar" aria-label="Add to Calendar" title="Add to Google Calendar">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      </button>`;
+    : `<div style="display:flex;gap:0.5em;flex-wrap:wrap;justify-content:center;">
+        <button class="button button-sm event-card-btn" data-flip-btn>${btnLabel}</button>
+        <button class="event-card-calendar" aria-label="Add to Calendar" title="Add to Google Calendar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </button>
+      </div>`;
 
   const backActions = isFinished
     ? `<span class="event-card-finished">Event Ended</span>`
-    : `<button class="button button-sm event-card-back-rsvp" data-flip-rsvp>${rsvpLabel}</button>
-      <button class="event-card-calendar" aria-label="Add to Calendar" title="Add to Google Calendar">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      </button>`;
+    : `<div style="display:flex;gap:0.5em;flex-wrap:wrap;justify-content:center;">
+        <button class="button button-sm event-card-back-rsvp" data-flip-rsvp>${rsvpLabel}</button>
+        <button class="event-card-calendar" aria-label="Add to Calendar" title="Add to Google Calendar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </button>
+      </div>`;
 
   return `
-    <div class="event-card" data-event-id="${event.id}" data-event-status="${event.status || ''}" data-event-title="${event.title}" data-event-date="${dateAttr}" data-event-duration="${event.duration || 2}">
+    <div class="event-card" data-event-id="${event.id}" data-event-status="${event.status || ''}" data-event-title="${event.title}" data-event-date="${dateAttr}" data-event-duration="${event.duration || 2}" data-event-fee="0">
       <div class="event-card-inner">
         <div class="event-card-front">
           <div class="event-card-image">
@@ -224,6 +229,7 @@ function initRSVP() {
     btn.addEventListener('click', () => {
       const card = btn.closest('.event-card');
       if (!card || getEventStatus(card) === 'finished') return;
+      if (!requireAuth()) return;
       currentEventId = card.dataset.eventId;
       currentEventTitle = card.dataset.eventTitle;
       resetForm();

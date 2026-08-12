@@ -117,6 +117,7 @@
         <button class="admin-nav-btn" data-admin-tab="events">Events</button>
         <button class="admin-nav-btn" data-admin-tab="gallery">Gallery</button>
         <button class="admin-nav-btn" data-admin-tab="spotlight">Spotlight</button>
+        <button class="admin-nav-btn" data-admin-tab="members">Members</button>
         <div class="admin-nav-group">
           <button class="admin-nav-btn admin-nav-parent" data-admin-parent="sports">
             <span>Sports</span>
@@ -185,6 +186,11 @@
             <span class="admin-stat-value" data-dashboard-families>0</span>
             <span class="admin-stat-label">Family Members</span>
           </div>
+          <div class="admin-stat-card">
+            <span class="admin-stat-value" data-dashboard-users>0</span>
+            <span class="admin-stat-label">Registered Users</span>
+          </div>
+
         </div>
       </section>
 
@@ -351,6 +357,52 @@
         </div>
       </section>
 
+      <!-- MEMBERS -->
+      <section class="admin-section" data-admin-section="members">
+        <div class="admin-section-header">
+          <h2 class="admin-section-title">Members</h2>
+          <p class="admin-section-desc">Review registrations and manage the registered youth member list</p>
+        </div>
+
+        <div class="admin-section-header" style="margin-top:1.5em;align-items:center;">
+          <h3 class="admin-section-title" style="font-size:1.1em;">Registration Requests</h3>
+        </div>
+        <div style="max-width:480px;margin-bottom:1em;">
+          <input type="text" data-member-search placeholder="Search by name, email, or username..." style="width:100%;font-family:var(--font-body);font-size:0.85em;padding:0.45em 0.6em;border:1.5px solid #ddd6cc;border-radius:6px;background:#fcfaf8;color:#2c2416;">
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table" data-admin-registrations>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Member</th>
+                <th>Registered</th>
+                <th style="width:180px;">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="6" style="padding:2em;text-align:center;color:var(--text-muted);">Loading registrations...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="admin-section-header" style="margin-top:2em;align-items:center;">
+          <h3 class="admin-section-title" style="font-size:1.1em;">Registered Youth Members</h3>
+        </div>
+        <div class="admin-upload-row" style="max-width:480px;margin-bottom:1em;">
+          <input type="text" id="newMemberName" placeholder="Add member full name..." style="flex:1;min-width:160px;font-family:var(--font-body);font-size:0.85em;padding:0.45em 0.6em;border:1.5px solid #ddd6cc;border-radius:6px;background:#fcfaf8;color:#2c2416;">
+          <button class="admin-add-btn" id="addMemberBtn" style="margin:0;font-size:0.8em;padding:0.45em 0.9em;">+ Add</button>
+        </div>
+        <div style="max-width:480px;margin-bottom:1em;">
+          <input type="text" data-member-name-search placeholder="Search registered members..." style="width:100%;font-family:var(--font-body);font-size:0.85em;padding:0.45em 0.6em;border:1.5px solid #ddd6cc;border-radius:6px;background:#fcfaf8;color:#2c2416;">
+        </div>
+        <div class="admin-list" data-admin-memberlist>
+          <div class="admin-list-empty">Loading member list...</div>
+        </div>
+      </section>
+
       <!-- SPORTS -->
       <section class="admin-section" data-admin-section="sports">
         <div class="admin-section-header">
@@ -512,8 +564,20 @@
                 <input type="number" data-field="football_squad-num" min="1" max="99">
               </div>
               <div class="admin-field">
+                <label>Position Label</label>
+                <input type="text" data-field="football_squad-label" placeholder="e.g. CM, CDM, ST">
+              </div>
+              <div class="admin-field">
                 <label>Position</label>
                 <input type="text" data-field="football_squad-position" placeholder="e.g. ST, LW/ST, CM">
+              </div>
+              <div class="admin-field">
+                <label>X (pitch pos)</label>
+                <input type="number" data-field="football_squad-x" min="0" max="100" value="50">
+              </div>
+              <div class="admin-field">
+                <label>Y (pitch pos)</label>
+                <input type="number" data-field="football_squad-y" min="0" max="100" value="50">
               </div>
               <div class="admin-field">
                 <label>Rating</label>
@@ -722,15 +786,12 @@
 
   <!-- ATTENDEE MODAL -->
   <div class="rsvp-overlay" data-attendee-overlay>
-    <div class="rsvp-modal" style="max-width:560px;">
+    <div class="rsvp-modal" style="max-width:700px;">
       <span class="rsvp-modal-cross">✝</span>
       <h3 data-attendee-title>Attendees</h3>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1em;">
-        <p style="margin:0;font-size:0.85em;color:var(--text-muted);" data-attendee-count></p>
-        <button class="admin-btn admin-btn-primary" data-attendee-pdf style="font-size:0.8em;padding:0.5em 1em;">Download PDF</button>
-      </div>
-      <div style="max-height:300px;overflow-y:auto;">
-        <table style="width:100%;border-collapse:collapse;font-size:0.85em;">
+      <p style="margin:0;font-size:0.85em;color:var(--text-muted);" data-attendee-count></p>
+      <div style="max-height:350px;overflow-y:auto;margin-top:0.75em;">
+        <table style="width:100%;border-collapse:collapse;font-size:0.82em;">
           <thead>
             <tr style="background:#f0e8d8;">
               <th style="padding:0.5em;text-align:left;color:var(--text-secondary);">#</th>
@@ -742,7 +803,8 @@
           <tbody data-attendee-list></tbody>
         </table>
       </div>
-      <div style="text-align:center;margin-top:1em;">
+      <div style="display:flex;gap:0.5em;justify-content:center;margin-top:1em;">
+        <button class="admin-btn admin-btn-outline" data-attendee-download>Download Report</button>
         <button class="admin-btn admin-btn-outline" data-attendee-close>Close</button>
       </div>
     </div>

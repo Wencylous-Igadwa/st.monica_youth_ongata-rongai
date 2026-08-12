@@ -3,6 +3,7 @@ import { initLenis }          from './lenis.js';
 import { initNavbar }         from './navbar.js';
 import { initLoader }         from './loader.js';
 import { initInertia }        from './utils/inertia.js';
+import { requireAuth }        from './auth-gate.js';
 
 const VERSES = [
   { text: 'For God so loved the world that he gave his only Son, that whoever believes in him should not perish but have eternal life.', ref: 'John 3:16' },
@@ -504,6 +505,114 @@ function handleAnswer(idx) {
   }, 1200);
 }
 
+const API_BASE = window.location.port === '3000' ? 'http://localhost:3001' : '';
+
+function getStoredName() {
+  try {
+    const user = JSON.parse(localStorage.getItem('auth_user'));
+    if (user && user.name) return user.name;
+  } catch {}
+  return localStorage.getItem('trivia_player_name') || '';
+}
+
+function setStoredName(name) {
+  localStorage.setItem('trivia_player_name', name);
+}
+
+function showNamePrompt() {
+  return new Promise(resolve => {
+    const stored = getStoredName();
+    if (stored) return resolve(stored);
+
+    const overlay = document.createElement('div');
+    overlay.className = 'trivia-name-overlay';
+    overlay.innerHTML = `
+      <div class="trivia-name-modal">
+        <div class="trivia-name-cross">✝</div>
+        <h3>Before You Play</h3>
+        <p>Enter your name for the leaderboard</p>
+        <input type="text" class="trivia-name-input" placeholder="e.g. John Kamau" maxlength="40" autofocus>
+        <button class="button button-gold" style="width:100%;margin-top:1em;">Continue</button>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    const input = overlay.querySelector('.trivia-name-input');
+    const btn = overlay.querySelector('button');
+
+    gsap.fromTo(overlay, { opacity: 0 }, { opacity: 1, duration: 0.3 });
+    gsap.fromTo(overlay.querySelector('.trivia-name-modal'), { scale: 0.9, y: 20 }, { scale: 1, y: 0, duration: 0.4, ease: 'back.out(1.7)', delay: 0.1 });
+
+    function submit() {
+      const name = input.value.trim();
+      if (!name) { input.focus(); return; }
+      setStoredName(name);
+      gsap.to(overlay, { opacity: 0, duration: 0.25, onComplete: () => overlay.remove() });
+      resolve(name);
+    }
+
+    btn.addEventListener('click', submit);
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') submit(); });
+  });
+}
+
+function submitScore(name, score, total, pct) {
+  const token = localStorage.getItem('auth_token');
+  const headers = { 'Content-Type': 'application/json' };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+
+  return fetch(`${API_BASE}/api/leaderboard/scores`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ name, score, total, percentage: pct }),
+  }).then(r => r.json()).catch(() => null);
+}
+
+function loadLeaderboard() {
+  const loading = document.querySelector('[data-leaderboard-loading]');
+  const table = document.querySelector('[data-leaderboard-table]');
+  const empty = document.querySelector('[data-leaderboard-empty]');
+  const body = document.querySelector('[data-leaderboard-body]');
+
+  fetch(`${API_BASE}/api/leaderboard/scores?limit=20`)
+    .then(r => r.json())
+    .then(data => {
+      loading.style.display = 'none';
+      const rows = data.data || [];
+      if (rows.length === 0) {
+        empty.style.display = '';
+        table.style.display = 'none';
+        return;
+      }
+      empty.style.display = 'none';
+      table.style.display = '';
+      body.innerHTML = '';
+      rows.forEach((row, i) => {
+        const div = document.createElement('div');
+        div.className = 'leaderboard-row' + (i === 0 ? ' is-top-1' : i === 1 ? ' is-top-2' : i === 2 ? ' is-top-3' : '');
+        const medals = ['🥇', '🥈', '🥉'];
+        div.innerHTML = `
+          <span class="leaderboard-rank">${i < 3 ? medals[i] : i + 1}</span>
+          <span class="leaderboard-name">${escapeHtml(row.name)}</span>
+          <span class="leaderboard-score">${row.score}</span>
+          <span class="leaderboard-pct">${row.percentage}%</span>
+        `;
+        body.appendChild(div);
+      });
+    })
+    .catch(() => {
+      loading.style.display = 'none';
+      empty.style.display = '';
+      table.style.display = 'none';
+    });
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
 function endTrivia() {
   gameActive = false;
   const card = document.querySelector('[data-question-card]');
@@ -511,7 +620,7 @@ function endTrivia() {
   const startEl = document.querySelector('[data-trivia-start]');
 
   gsap.to(stats, { opacity: 0, y: -20, duration: 0.3, ease: 'power2.in' });
-  gsap.to(card, { opacity: 0, y: -20, duration: 0.3, ease: 'power2.in', delay: 0.1, onComplete: () => {
+  gsap.to(card, { opacity: 0, y: -20, duration: 0.3, ease: 'power2.in', delay: 0.1, onComplete: async () => {
     const maxScore = totalQuestions * 10;
     const pct = Math.round((currentScore / maxScore) * 100);
     let grade = '';
@@ -519,6 +628,9 @@ function endTrivia() {
     else if (pct >= 70) grade = 'Great job! You know your faith well!';
     else if (pct >= 50) grade = 'Good effort! Keep studying the Word.';
     else grade = 'Keep reading! The Bible is full of treasures.';
+
+    const playerName = await showNamePrompt();
+    submitScore(playerName, currentScore, maxScore, pct).then(() => loadLeaderboard());
 
     card.innerHTML = `
       <div class="trivia-result" data-trivia-result>
@@ -601,7 +713,12 @@ async function init() {
   initSectionHeaders();
   initHeroAnim();
 
-  document.querySelector('[data-trivia-btn]').addEventListener('click', startTrivia);
+  document.querySelector('[data-trivia-btn]').addEventListener('click', () => {
+    if (!requireAuth()) return;
+    startTrivia();
+  });
+
+  loadLeaderboard();
 
   ScrollTrigger.refresh();
   lenis.emit('scroll');

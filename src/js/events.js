@@ -5,6 +5,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/effect-creative';
 import { initCalendarButtons } from './calendar.js';
 import { loadList } from './utils/data.js';
+import { requireAuth } from './auth-gate.js';
 
 const EVENT_DEFAULTS = [];
 
@@ -151,7 +152,7 @@ function initCardFlips() {
       const start = new Date(dateStr).getTime();
       const durationMs = (parseFloat(card.dataset.eventDuration) || 2) * 60 * 60 * 1000;
       const now = Date.now();
-      if (now < start || now > start + durationMs) return;
+      if (now > start + durationMs) return;
       card.classList.add('is-flipped');
     });
   });
@@ -198,6 +199,7 @@ function initRSVP() {
     btn.addEventListener('click', () => {
       const card = btn.closest('.event-card');
       if (!card || isCardFinished(card)) return;
+      if (!requireAuth()) return;
       currentEventId = card.dataset.eventId;
       currentEventTitle = card.dataset.eventTitle;
       if (!currentEventId) return;

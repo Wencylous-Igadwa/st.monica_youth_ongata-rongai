@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <title>Verify — St. Monica Catholic Youth Parish Ongata Rongai</title>
+  <meta content="Enter your registration code to verify your St. Monica Youth account." name="description">
+
+  <link rel="stylesheet" href="/src/styles/fonts.css">
+  <link rel="stylesheet" href="/src/styles/main.css">
+  <link rel="stylesheet" href="/load.css">
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✝</text></svg>">
+
+  <script>(localStorage.getItem('theme')==='dark')&&document.documentElement.setAttribute('data-theme','dark')</script>
+
+  <style>
+    .verify-page {
+      min-height: 100vh; display: flex; align-items: center;
+      justify-content: center; padding: 2em 1em; position: relative;
+      background: var(--bg-primary);
+    }
+    .verify-bg {
+      position: fixed; inset: 0; z-index: 0;
+      background: var(--bg-primary); overflow: hidden;
+    }
+    .verify-bg::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 600px 600px at 20% 30%, rgba(200,150,62,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 500px 500px at 80% 70%, rgba(196,122,90,0.05) 0%, transparent 70%);
+    }
+    .verify-bg-cross {
+      position: absolute; font-size: 28vw;
+      color: rgba(200,150,62,0.04); top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none; user-select: none; line-height: 1;
+    }
+    .verify-container { position: relative; z-index: 1; width: 100%; max-width: 420px; }
+    .verify-logo { text-align: center; margin-bottom: 1.6em; }
+    .verify-logo-cross {
+      display: inline-block; font-size: 2.4rem;
+      color: var(--gold); margin-bottom: 0.15em;
+      animation: verifyGlow 3s ease-in-out infinite;
+    }
+    @keyframes verifyGlow {
+      0%, 100% { text-shadow: 0 0 15px rgba(200,150,62,0.15); }
+      50% { text-shadow: 0 0 30px rgba(200,150,62,0.35), 0 0 60px rgba(200,150,62,0.1); }
+    }
+    .verify-logo-text {
+      display: block; font-family: var(--font-display);
+      font-size: 1.4rem; font-weight: 700;
+      color: var(--text-primary); letter-spacing: 0.05em;
+    }
+    .verify-logo-accent { color: var(--gold); }
+
+    .verify-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      background: linear-gradient(145deg, #f5efe6, #ede4d5);
+      box-shadow: 0 8px 32px rgba(44,36,22,0.1), 0 2px 8px rgba(44,36,22,0.06);
+      padding: 2.4em 2em;
+    }
+    [data-theme="dark"] .verify-card {
+      background: linear-gradient(145deg, var(--bg-dark), var(--bg-dark-secondary));
+      border-color: rgba(250,246,240,0.08);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .verify-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--text-primary); margin: 0 0 0.2em;
+    }
+    .verify-sub {
+      font-size: 0.88em; color: var(--text-muted);
+      margin: 0 0 1.4em; line-height: 1.5;
+    }
+    .verify-form { display: flex; flex-direction: column; gap: 1em; }
+    .verify-field label {
+      display: block; font-size: 0.78em; font-weight: 600;
+      color: var(--text-secondary); margin-bottom: 0.35em; letter-spacing: 0.03em;
+    }
+    .verify-input {
+      width: 100%; height: 46px; box-sizing: border-box;
+      padding: 0 1em; font-family: var(--font-body);
+      font-size: 1em; font-weight: 600; letter-spacing: 0.25em; text-align: center;
+      color: var(--text-primary); background-color: var(--warm-white);
+      border: 1.5px solid var(--border); border-radius: var(--radius-md);
+      outline: none; transition: all 0.3s var(--smooth-ease);
+    }
+    [data-theme="dark"] .verify-input {
+      background-color: var(--bg-dark);
+      border-color: rgba(250,246,240,0.1);
+      color: var(--text-primary);
+    }
+    .verify-input:hover { border-color: rgba(200,150,62,0.25); }
+    .verify-input:focus, .verify-input:focus-visible {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(200,150,62,0.1);
+    }
+    .verify-btn {
+      width: 100%; height: 46px;
+      font-family: var(--font-body); font-size: 0.875em; font-weight: 600;
+      letter-spacing: 0.04em; color: var(--warm-white);
+      background: var(--gold); border: none; border-radius: var(--radius-md);
+      cursor: pointer; transition: all 0.3s var(--smooth-ease);
+      position: relative; overflow: hidden;
+    }
+    .verify-btn:hover {
+      background: var(--gold-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(200,150,62,0.25);
+    }
+    .verify-btn:active { transform: translateY(0); box-shadow: none; }
+    .verify-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+    .verify-btn-text { transition: opacity 0.2s; }
+    .verify-btn.is-loading .verify-btn-text { opacity: 0; }
+    .verify-btn-spinner {
+      display: none; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%); width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
+      border-radius: 50%; animation: verifySpin 0.6s linear infinite;
+    }
+    .verify-btn.is-loading .verify-btn-spinner { display: block; }
+    @keyframes verifySpin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+    .verify-msg {
+      font-size: 0.85em; text-align: center; line-height: 1.5;
+      border-radius: var(--radius-md); padding: 0.8em 1em;
+      display: none; box-sizing: border-box; width: 100%;
+    }
+    .verify-msg.is-showing { display: block; }
+    .verify-msg.is-error { background: rgba(196,90,60,0.1); color: var(--coral); border: 1px solid rgba(196,90,60,0.2); }
+    .verify-msg.is-success { background: rgba(122,171,122,0.12); color: var(--success, #4a7c59); border: 1px solid rgba(122,171,122,0.25); }
+
+    .verify-resend {
+      background: none; border: none; cursor: pointer;
+      color: var(--gold); font-weight: 600; font-size: 0.85em;
+      text-decoration: underline; text-underline-offset: 3px;
+      transition: color 0.2s;
+    }
+    .verify-resend:hover { color: var(--gold-light); }
+    .verify-resend:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .verify-footer { text-align: center; margin-top: 1.6em; }
+    .verify-footer-text { font-size: 0.88em; color: var(--text-muted); }
+    .verify-footer-link {
+      color: var(--gold); text-decoration: none; font-weight: 600;
+      transition: color 0.2s;
+    }
+    .verify-footer-link:hover { color: var(--gold-light); }
+  </style>
+</head>
+<body>
+
+  <div class="verify-page">
+    <div class="verify-bg">
+      <div class="verify-bg-cross">✝</div>
+    </div>
+
+    <div class="verify-container">
+      <div class="verify-logo">
+        <span class="verify-logo-cross">✝</span>
+        <span class="verify-logo-text">St. Monica <span class="verify-logo-accent">Youth</span></span>
+      </div>
+
+      <div class="verify-card">
+        <h1 class="verify-title">Verify Your Account</h1>
+        <p class="verify-sub">We sent a 6-digit verification code to your email. Enter it below to activate your account.</p>
+
+        <form id="verifyForm" class="verify-form" autocomplete="off">
+          <div class="verify-field">
+            <label for="verifyEmail">Email</label>
+            <input class="verify-input" id="verifyEmail" name="email" type="email" required autocomplete="email" style="letter-spacing:0.02em;text-align:left;font-weight:500;">
+          </div>
+          <div class="verify-field">
+            <label for="verifyCode">Verification Code</label>
+            <input class="verify-input" id="verifyCode" name="code" type="text" inputmode="numeric" maxlength="6" required placeholder="000000" autocomplete="one-time-code">
+          </div>
+          <div class="verify-msg" id="verifyMsg"></div>
+          <button type="submit" class="verify-btn" id="verifyBtn">
+            <span class="verify-btn-text">Verify &amp; Activate</span>
+            <span class="verify-btn-spinner"></span>
+          </button>
+        </form>
+
+        <p style="text-align:center;margin:1em 0 0;font-size:0.85em;color:var(--text-muted);">
+          Didn't get the code?
+          <button type="button" class="verify-resend" id="resendBtn">Resend code</button>
+        </p>
+      </div>
+
+      <div class="verify-footer">
+        <p class="verify-footer-text"><a href="/login" class="verify-footer-link">Back to Log in</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/js/verify.js"></script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <title>Santa Users — St. Monica Catholic Youth Parish Ongata Rongai</title>
+  <meta content="Registered users roster for the Secret Santa program." name="description">
+
+  <link rel="stylesheet" href="/src/styles/fonts.css">
+  <link rel="stylesheet" href="/src/styles/main.css">
+  <link rel="stylesheet" href="/load.css">
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✝</text></svg>">
+
+  <script>(localStorage.getItem('theme')==='dark')&&document.documentElement.setAttribute('data-theme','dark')</script>
+
+  <style>
+    .loader {
+      position: fixed; inset: 0; width: 100%; height: 100%;
+      z-index: 99999; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background: var(--bg-primary);
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    html.is-ready .loader { opacity: 0; visibility: hidden; pointer-events: none; }
+
+    /* ═══ BG PARTICLES ═══ */
+    .su-particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+    .su-orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(90px); opacity: 0.15;
+    }
+    .su-orb:nth-child(1) { width: 350px; height: 350px; background: var(--gold); top: -100px; left: -80px; animation: suFloat 24s ease-in-out infinite; }
+    .su-orb:nth-child(2) { width: 280px; height: 280px; background: var(--mary-blue); bottom: -60px; right: -60px; animation: suFloat 30s ease-in-out infinite reverse; }
+    .su-orb:nth-child(3) { width: 220px; height: 220px; background: var(--terracotta); top: 50%; left: 60%; animation: suFloat 20s ease-in-out infinite 5s; }
+    @keyframes suFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(50px, -40px) scale(1.12); }
+      66% { transform: translate(-40px, 50px) scale(0.88); }
+    }
+
+    /* ═══ PAGE ═══ */
+    .su-page {
+      position: relative; z-index: 1;
+      min-height: 100vh; padding: 0 1.5em 4em;
+      display: flex; flex-direction: column; align-items: center;
+    }
+
+    /* ═══ HERO ═══ */
+    .su-hero { text-align: center; padding: 3em 0 0.8em; }
+    .su-hero-icon {
+      width: 64px; height: 64px; margin: 0 auto 0.8em;
+      border-radius: 18px; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, rgba(200,150,62,0.12), rgba(200,150,62,0.03));
+      border: 1px solid rgba(200,150,62,0.12);
+      font-size: 1.8rem; position: relative;
+    }
+    .su-hero-icon-ring {
+      position: absolute; inset: -4px; border-radius: 22px;
+      border: 2px solid transparent;
+      background: linear-gradient(135deg, rgba(200,150,62,0.25), transparent, rgba(200,150,62,0.12)) border-box;
+      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      animation: suRingSpin 10s linear infinite;
+    }
+    @keyframes suRingSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .su-hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+      font-weight: 700; color: var(--text-primary);
+      margin: 0 0 0.15em; letter-spacing: -0.01em; line-height: 1.1;
+    }
+    .su-hero-title-accent {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .su-hero-sub {
+      font-family: var(--font-body); font-size: 0.92em;
+      color: var(--text-muted); margin: 0; max-width: 440px; line-height: 1.5;
+    }
+
+    /* ═══ LOGIN ═══ */
+    .su-login { width: 100%; max-width: 420px; margin: 1.6em auto 0; }
+    .su-login-card {
+      background: rgba(245,239,230,0.75); backdrop-filter: blur(12px);
+      border: 1px solid var(--border); border-radius: 20px;
+      padding: 2em 1.8em; box-shadow: 0 20px 50px rgba(44,36,22,0.08);
+      position: relative; overflow: hidden;
+    }
+    [data-theme="dark"] .su-login-card { background: rgba(36,31,23,0.75); }
+    .su-login-card::before {
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+    }
+    .su-login-lock {
+      width: 52px; height: 52px; margin: 0 auto 1em;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      box-shadow: 0 8px 20px rgba(200,150,62,0.3);
+    }
+    .su-login-lock svg { width: 22px; height: 22px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .su-login-title {
+      font-family: var(--font-display); font-size: 1.4rem;
+      color: var(--text-primary); text-align: center; margin: 0 0 0.2em;
+    }
+    .su-login-sub {
+      font-family: var(--font-body); font-size: 0.8em;
+      color: var(--text-muted); text-align: center; margin: 0 0 1.6em;
+    }
+    .su-field { margin-bottom: 1em; }
+    .su-field label {
+      display: block; font-family: var(--font-body); font-size: 0.72em;
+      font-weight: 600; color: var(--text-secondary);
+      text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.45em;
+    }
+    .su-input {
+      width: 100%; padding: 0.8em 1em; box-sizing: border-box;
+      border-radius: 12px; border: 1.5px solid var(--border);
+      background: var(--bg-primary); color: var(--text-primary);
+      font-family: var(--font-mono); font-size: 0.9em;
+      transition: border-color 0.3s var(--smooth-ease), box-shadow 0.3s var(--smooth-ease);
+    }
+    .su-input:focus {
+      outline: none; border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(200,150,62,0.15);
+    }
+    .su-login-btn {
+      width: 100%; margin-top: 0.4em; padding: 0.85em 1em;
+      border: none; border-radius: 12px; cursor: pointer;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #fff; font-family: var(--font-body); font-size: 0.9em; font-weight: 700;
+      letter-spacing: 0.02em; transition: transform 0.2s var(--smooth-ease), box-shadow 0.3s var(--smooth-ease);
+      box-shadow: 0 10px 24px rgba(200,150,62,0.28);
+    }
+    .su-login-btn:hover { transform: translateY(-1px); box-shadow: 0 14px 28px rgba(200,150,62,0.36); }
+    .su-login-btn:disabled { opacity: 0.6; cursor: default; transform: none; }
+    .su-login-msg {
+      min-height: 1.3em; margin-top: 0.9em; text-align: center;
+      font-family: var(--font-body); font-size: 0.8em; font-weight: 600;
+    }
+    .su-login-msg.is-error { color: var(--coral); }
+    .su-login-msg.is-ok { color: var(--gold); }
+
+    /* ═══ ROSTER ═══ */
+    .su-roster { display: none; width: 100%; max-width: 1200px; margin-top: 1.8em; }
+    .su-roster.is-visible { display: block; }
+    .su-roster-head {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1em; flex-wrap: wrap; margin-bottom: 1em;
+    }
+    .su-roster-count {
+      font-family: var(--font-mono); font-size: 0.82em; font-weight: 700;
+      color: var(--gold); text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .su-roster-search { position: relative; flex: 1; min-width: 200px; max-width: 380px; }
+    .su-search-icon {
+      position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+      width: 15px; height: 15px; stroke: var(--text-muted); fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; pointer-events: none;
+    }
+    .su-search-input {
+      width: 100%; padding: 0.6em 1em 0.6em 2.4em; box-sizing: border-box;
+      border-radius: 100px; border: 1.5px solid var(--border);
+      background: rgba(245,239,230,0.6); color: var(--text-primary);
+      font-family: var(--font-body); font-size: 0.85em;
+      transition: border-color 0.3s var(--smooth-ease), box-shadow 0.3s var(--smooth-ease);
+    }
+    [data-theme="dark"] .su-search-input { background: rgba(36,31,23,0.6); }
+    .su-search-input:focus {
+      outline: none; border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(200,150,62,0.15);
+    }
+    .su-search-input::placeholder { color: var(--text-muted); }
+    .su-logout-btn {
+      display: inline-flex; align-items: center; gap: 0.4em;
+      padding: 0.55em 1.1em; border-radius: 100px; cursor: pointer;
+      border: 1.5px solid var(--border); background: transparent;
+      font-family: var(--font-body); font-size: 0.75em; font-weight: 600;
+      color: var(--text-secondary); transition: all 0.3s var(--smooth-ease);
+    }
+    .su-logout-btn:hover { border-color: var(--coral); color: var(--coral); }
+    .su-logout-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .su-table-wrap {
+      background: rgba(245,239,230,0.6); backdrop-filter: blur(10px);
+      border: 1px solid var(--border); border-radius: 18px;
+      overflow-x: auto; overflow-y: hidden;
+      box-shadow: 0 16px 40px rgba(44,36,22,0.06);
+    }
+    [data-theme="dark"] .su-table-wrap { background: rgba(36,31,23,0.6); }
+    .su-table { width: 100%; border-collapse: collapse; min-width: 920px; }
+    .su-table th {
+      font-family: var(--font-body); font-size: 0.68em; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted);
+      text-align: left; padding: 0.9em 1.1em;
+      border-bottom: 1.5px solid var(--border); white-space: nowrap;
+    }
+    .su-table td {
+      font-family: var(--font-body); font-size: 0.85em; color: var(--text-secondary);
+      padding: 0.95em 1.1em; border-bottom: 1px solid var(--border-light);
+      vertical-align: top;
+    }
+    .su-table tr:last-child td { border-bottom: none; }
+    .su-table tbody tr { transition: background 0.25s var(--smooth-ease); }
+    .su-table tbody tr:hover { background: rgba(200,150,62,0.05); }
+    .su-cell-num {
+      font-family: var(--font-mono); font-size: 0.78em; color: var(--text-muted);
+    }
+    .su-cell-name { font-weight: 700; color: var(--text-primary); }
+    .su-cell-mail {
+      font-family: var(--font-mono); font-size: 0.8em; color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .su-cell-username { font-family: var(--font-mono); font-weight: 700; color: var(--gold); }
+    .su-cell-username.is-none { color: var(--text-muted); font-weight: 400; }
+    .su-santa-for-name { font-weight: 700; color: var(--text-primary); }
+    .su-santa-for-user {
+      display: inline-flex; align-items: center; gap: 0.3em;
+      font-family: var(--font-mono); font-size: 0.72em; font-weight: 700;
+      color: var(--gold); margin-top: 0.2em;
+    }
+    .su-santa-for-user svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .su-santa-for-none {
+      font-family: var(--font-body); font-size: 0.72em; font-weight: 600;
+      color: var(--text-muted); font-style: italic;
+    }
+    .su-chips { display: flex; flex-wrap: wrap; gap: 0.35em; max-width: 420px; }
+    .su-chip {
+      font-family: var(--font-body); font-size: 0.72em; font-weight: 600;
+      padding: 0.28em 0.7em; border-radius: 100px;
+      background: rgba(200,150,62,0.1); color: var(--gold-dark);
+      border: 1px solid rgba(200,150,62,0.2); white-space: nowrap;
+    }
+    [data-theme="dark"] .su-chip { color: var(--gold-light); }
+    .su-chip.is-none { background: transparent; color: var(--text-muted); border-color: var(--border); }
+    .su-empty {
+      font-family: var(--font-body); font-size: 0.82em; color: var(--text-muted);
+      text-align: center; padding: 3em 1em;
+    }
+
+    /* ═══ MOBILE CARD LAYOUT ═══ */
+    @media (max-width: 720px) {
+      .su-page { padding: 0 1em 3em; }
+      .su-roster-head { gap: 0.6em; }
+      .su-roster-search { max-width: 100%; flex-basis: 100%; }
+      .su-table, .su-table tbody, .su-table tr, .su-table td { display: block; width: 100%; }
+      .su-table { min-width: 0; }
+      .su-table thead { display: none; }
+      .su-table tr {
+        background: rgba(245,239,230,0.6); border: 1px solid var(--border);
+        border-radius: 14px; padding: 0.6em 1em 0.8em; margin-bottom: 0.8em;
+      }
+      [data-theme="dark"] .su-table tr { background: rgba(36,31,23,0.6); }
+      .su-table td { border: none; padding: 0.4em 0; }
+      .su-table td::before {
+        content: attr(data-label);
+        display: block; font-family: var(--font-body); font-size: 0.62em;
+        font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+        color: var(--text-muted); margin-bottom: 0.15em;
+      }
+      .su-cell-mail { white-space: normal; word-break: break-all; }
+      .su-chips { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div class="loader" data-loader>
+    <div class="shadow">
+      <div id="svg-container">
+        <svg class="svg-hw" viewBox="-100 100 800 800" preserveAspectRatio="xMidYMid meet">
+          <path id="path7050" class="path" d="M 250,180 L 300,180 L 300,260 Z"></path>
+          <path id="path7062" class="path" d="M 300,180 L 350,180 L 300,260 Z"></path>
+          <path id="path7064" class="path" d="M 250,180 L 300,260 L 250,340 Z"></path>
+          <path id="path7065" class="path" d="M 350,180 L 300,260 L 350,340 Z"></path>
+          <path id="path7066" class="path" d="M 250,340 L 300,260 L 300,340 Z"></path>
+          <path id="path7067" class="path" d="M 350,340 L 300,260 L 300,340 Z"></path>
+          <path id="path7068" class="path" d="M 120,340 L 250,340 L 250,390 Z"></path>
+          <path id="path7069" class="path" d="M 120,340 L 250,390 L 120,390 Z"></path>
+          <path id="path7070" class="path" d="M 120,390 L 250,390 L 120,440 Z"></path>
+          <path id="path7071" class="path" d="M 120,440 L 250,390 L 250,440 Z"></path>
+          <path id="path7072" class="path" d="M 350,340 L 480,340 L 350,390 Z"></path>
+          <path id="path7076" class="path" d="M 480,340 L 480,390 L 350,390 Z"></path>
+          <path id="path7080" class="path" d="M 350,390 L 480,390 L 480,440 Z"></path>
+          <path id="path7081" class="path" d="M 350,390 L 480,440 L 350,440 Z"></path>
+          <path id="path7086" class="path" d="M 250,340 L 300,340 L 300,390 Z"></path>
+          <path id="path7088" class="path" d="M 250,340 L 300,390 L 250,390 Z"></path>
+          <path id="path7090" class="path" d="M 250,390 L 300,390 L 250,440 Z"></path>
+          <path id="path7091" class="path" d="M 250,440 L 300,390 L 300,440 Z"></path>
+          <path id="path7092" class="path" d="M 300,340 L 350,340 L 300,390 Z"></path>
+          <path id="path7094" class="path" d="M 350,340 L 350,390 L 300,390 Z"></path>
+          <path id="path7096" class="path" d="M 300,390 L 350,390 L 350,440 Z"></path>
+          <path id="path7098" class="path" d="M 300,390 L 350,440 L 300,440 Z"></path>
+          <path id="path7100" class="path" d="M 250,440 L 300,440 L 300,560 Z"></path>
+          <path id="path7101" class="path" d="M 250,440 L 300,560 L 250,560 Z"></path>
+          <path id="path7102" class="path" d="M 300,440 L 350,440 L 300,560 Z"></path>
+          <path id="path7104" class="path" d="M 350,440 L 350,560 L 300,560 Z"></path>
+          <path id="path7105" class="path" d="M 250,560 L 300,560 L 300,780 Z"></path>
+          <path id="path7106" class="path" d="M 250,560 L 300,780 L 250,780 Z"></path>
+          <path id="path7107" class="path" d="M 300,560 L 350,560 L 300,780 Z"></path>
+          <path id="path7108" class="path" d="M 350,560 L 350,780 L 300,780 Z"></path>
+        </svg>
+      </div>
+      <div class="loading">
+        <span data-l>S</span><span data-l>T</span><span data-l>.</span>
+        <span data-l>M</span><span data-l>O</span><span data-l>N</span><span data-l>I</span><span data-l>C</span><span data-l>A</span>
+        <br>
+        <span data-l>Y</span><span data-l>O</span><span data-l>U</span><span data-l>T</span><span data-l>H</span>
+        <br>
+        <span data-l>O</span><span data-l>N</span><span data-l>G</span><span data-l>A</span><span data-l>T</span><span data-l>A</span>&nbsp;<span data-l>R</span><span data-l>O</span><span data-l>N</span><span data-l>G</span><span data-l>A</span><span data-l>I</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="su-particles">
+    <div class="su-orb"></div><div class="su-orb"></div><div class="su-orb"></div>
+  </div>
+
+  <div class="su-page">
+
+    <!-- HERO -->
+    <div class="su-hero">
+      <div class="su-hero-icon">
+        <div class="su-hero-icon-ring"></div>
+        🎁
+      </div>
+      <h1 class="su-hero-title">Secret Santa <span class="su-hero-title-accent">Users</span></h1>
+      <p class="su-hero-sub">Registered participants, their Santa usernames, and who they are Santa for.</p>
+    </div>
+
+    <!-- LOGIN -->
+    <div class="su-login" id="loginView">
+      <div class="su-login-card">
+        <div class="su-login-lock">
+          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h2 class="su-login-title">Roster Access</h2>
+        <p class="su-login-sub">Enter your credentials to view the roster.</p>
+        <div class="su-field">
+          <label for="suUsername">Username</label>
+          <input class="su-input" id="suUsername" type="text" autocomplete="username" placeholder="roster username">
+        </div>
+        <div class="su-field">
+          <label for="suPassword">Password</label>
+          <input class="su-input" id="suPassword" type="password" autocomplete="current-password" placeholder="••••••••">
+        </div>
+        <button class="su-login-btn" id="suLoginBtn" type="button">Unlock Roster</button>
+        <div class="su-login-msg" id="suLoginMsg"></div>
+      </div>
+    </div>
+
+    <!-- ROSTER -->
+    <div class="su-roster" id="rosterView">
+      <div class="su-roster-head">
+        <div class="su-roster-count" id="rosterCount">Loading...</div>
+        <div class="su-roster-search">
+          <svg class="su-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="rosterSearch" class="su-search-input" placeholder="Search by name, email, or username...">
+        </div>
+        <button class="su-logout-btn" id="logoutBtn" type="button">
+          <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Log Out
+        </button>
+      </div>
+      <div class="su-table-wrap">
+        <table class="su-table">
+          <thead>
+            <tr>
+              <th style="width:44px;">#</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Santa Username</th>
+              <th>Santa For</th>
+              <th>Interests</th>
+            </tr>
+          </thead>
+          <tbody id="rosterBody">
+            <tr><td colspan="6"><div class="su-empty">Loading users...</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/js/santa-users.js"></script>
+</body>
+</html>

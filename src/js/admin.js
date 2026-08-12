@@ -25,17 +25,20 @@ async function getData(key) {
 
 async function saveData(key, data) {
   _cache[key] = data;
-  try {
-    const res = await fetchAPI('GET', `/${key}`);
-    const existing = (res.data || res) ?? [];
-    const existingMap = new Map(existing.map(i => [i.id, i]));
-    const currentMap = new Map(data.map(i => [i.id, i]));
-    await Promise.all([
-      ...data.filter(i => !existingMap.has(i.id)).map(i => fetchAPI('POST', `/${key}`, i).catch(() => {})),
-      ...data.filter(i => existingMap.has(i.id)).map(i => fetchAPI('PUT', `/${key}/${i.id}`, i).catch(() => {})),
-      ...existing.filter(i => !currentMap.has(i.id)).map(i => fetchAPI('DELETE', `/${key}/${i.id}`).catch(() => {})),
-    ]);
-  } catch {}
+  const res = await fetchAPI('GET', `/${key}`);
+  const existing = (res.data || res) ?? [];
+  const existingMap = new Map(existing.map(i => [i.id, i]));
+  const currentMap = new Map(data.map(i => [i.id, i]));
+  const results = await Promise.allSettled([
+    ...data.filter(i => !existingMap.has(i.id)).map(i => fetchAPI('POST', `/${key}`, i)),
+    ...data.filter(i => existingMap.has(i.id)).map(i => fetchAPI('PUT', `/${key}/${i.id}`, i)),
+    ...existing.filter(i => !currentMap.has(i.id)).map(i => fetchAPI('DELETE', `/${key}/${i.id}`)),
+  ]);
+  const failures = results.filter(r => r.status === 'rejected');
+  if (failures.length) {
+    const msg = failures[0].reason?.message || 'Save failed';
+    throw new Error(msg);
+  }
 }
 
 const LEADERSHIP_DEFAULTS = [
@@ -140,7 +143,207 @@ async function updateDashboard() {
   document.querySelector('[data-dashboard-football-squad]').textContent = counts.football_squad;
   document.querySelector('[data-dashboard-leadership]').textContent = counts.leadership;
   document.querySelector('[data-dashboard-families]').textContent = counts.families;
+
+  try {
+    const members = await getMembersData();
+    document.querySelector('[data-dashboard-users]').textContent = members.users.length;
+  } catch {}
 }
+
+/* ─── MEMBERS ─── */
+async function getMembersData() {
+  if (_cache.members) return _cache.members;
+  const data = await fetchAPI('GET', '/admin/members');
+  _cache.members = { users: data.users || [], memberNames: data.memberNames || [] };
+  return _cache.members;
+}
+
+function formatMemberDate(dateStr) {
+  if (!dateStr) return '-';
+  const d = new Date(dateStr);
+  if (isNaN(d.getTime())) return '-';
+  return d.toLocaleDateString();
+}
+
+function statusBadge(status) {
+  const map = { verified: 'Verified', pending: 'Pending', denied: 'Denied' };
+  return `<span class="member-status is-${status}">${map[status] || status}</span>`;
+}
+
+function memberFlag(user) {
+  if (user.username === 'admin') return '<span class="member-flag" style="background:#c8963e22;color:#a57c24;border-color:#c8963e44;">Admin</span>';
+  return user.is_member
+    ? '<span class="member-flag">Member</span>'
+    : '<span class="member-flag is-no">No</span>';
+}
+
+function registrationActions(user) {
+  if (user.username === 'admin') return '<span style="color:#8a7e72;">—</span>';
+  return `
+    <button class="member-action-btn approve" data-member-approve="${user.id}">Approve</button>
+    <button class="member-action-btn deny" data-member-deny="${user.id}">Deny</button>
+  `;
+}
+
+let _memberSearch = '';
+let _memberNameSearch = '';
+
+async function renderRegistrations() {
+  const tbody = document.querySelector('[data-admin-registrations] tbody');
+  if (!tbody) return;
+  let members;
+  try {
+    members = await getMembersData();
+  } catch {
+    tbody.innerHTML = '<tr><td colspan="6" style="padding:2em;text-align:center;color:#d32f2f;">Failed to load registrations.</td></tr>';
+    return;
+  }
+  let users = members.users;
+  const q = _memberSearch.trim().toLowerCase();
+  if (q) {
+    users = users.filter(u => [u.name, u.email, u.username].filter(Boolean).some(v => String(v).toLowerCase().includes(q)));
+  }
+  if (!users.length) {
+    tbody.innerHTML = `<tr><td colspan="6" style="padding:2em;text-align:center;color:var(--text-muted);">${q ? 'No users match your search.' : 'No registrations yet.'}</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = users.map(u => `
+    <tr>
+      <td>${u.name || '-'}</td>
+      <td>${u.email || '-'}</td>
+      <td>${statusBadge(u.status)}</td>
+      <td>${memberFlag(u)}</td>
+      <td>${formatMemberDate(u.created_at)}</td>
+      <td style="white-space:nowrap;">${registrationActions(u)}</td>
+    </tr>
+  `).join('');
+
+  tbody.querySelectorAll('[data-member-approve]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      try {
+        await fetchAPI('POST', `/admin/members/${btn.dataset.memberApprove}/approve`);
+        _cache.members = null;
+        await renderRegistrations();
+        updateDashboard();
+      } catch {
+        alert('Failed to approve. Make sure you are logged in as admin.');
+      }
+    });
+  });
+
+  tbody.querySelectorAll('[data-member-deny]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      if (!confirm('Deny this registration?')) return;
+      btn.disabled = true;
+      try {
+        await fetchAPI('POST', `/admin/members/${btn.dataset.memberDeny}/deny`);
+        _cache.members = null;
+        await renderRegistrations();
+        updateDashboard();
+      } catch {
+        alert('Failed to deny. Make sure you are logged in as admin.');
+      }
+    });
+  });
+}
+
+async function renderMemberList() {
+  const list = document.querySelector('[data-admin-memberlist]');
+  if (!list) return;
+  let members;
+  try {
+    members = await getMembersData();
+  } catch {
+    list.innerHTML = '<div class="admin-list-empty">Failed to load member list.</div>';
+    return;
+  }
+  let names = members.memberNames;
+  const q = _memberNameSearch.trim().toLowerCase();
+  if (q) {
+    names = names.filter(n => String(n.full_name).toLowerCase().includes(q));
+  }
+  if (!names.length) {
+    list.innerHTML = `<div class="admin-list-empty">${q ? 'No members match your search.' : 'No member names yet. Add one above.'}</div>`;
+    return;
+  }
+  list.innerHTML = names.map(n => `
+    <div class="admin-list-item">
+      <div class="admin-list-item-main">
+        <span class="admin-list-item-title">${n.full_name}</span>
+      </div>
+      <div class="admin-list-item-actions">
+        <button class="admin-list-delete" data-member-name-delete="${n.id}">Remove</button>
+      </div>
+    </div>
+  `).join('');
+
+  list.querySelectorAll('[data-member-name-delete]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      if (!confirm('Remove this name from the member list?')) return;
+      try {
+        await fetchAPI('DELETE', `/admin/members/names/${btn.dataset.memberNameDelete}`);
+        _cache.members = null;
+        await renderMemberList();
+      } catch {
+        alert('Failed to remove. Make sure you are logged in as admin.');
+      }
+    });
+  });
+}
+
+function initMembersPage() {
+  const tbody = document.querySelector('[data-admin-registrations]');
+  const addBtn = document.getElementById('addMemberBtn');
+  const input = document.getElementById('newMemberName');
+  if (!tbody) return;
+
+  renderRegistrations();
+  renderMemberList();
+
+  const searchInput = document.querySelector('[data-member-search]');
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      _memberSearch = searchInput.value;
+      renderRegistrations();
+    });
+  }
+
+  const nameSearchInput = document.querySelector('[data-member-name-search]');
+  if (nameSearchInput) {
+    nameSearchInput.addEventListener('input', () => {
+      _memberNameSearch = nameSearchInput.value;
+      renderMemberList();
+    });
+  }
+
+  if (addBtn && input) {
+    const doAdd = async () => {
+      const name = input.value.trim();
+      if (!name) { alert('Enter a name.'); return; }
+      addBtn.disabled = true;
+      try {
+        const res = await fetch(`/api/admin/members/names`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${adminApi.getToken()}` },
+          body: JSON.stringify({ name }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Failed to add');
+        input.value = '';
+        _cache.members = null;
+        await renderMemberList();
+      } catch (err) {
+        alert(err.message);
+      } finally {
+        addBtn.disabled = false;
+      }
+    };
+    addBtn.addEventListener('click', doAdd);
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') doAdd(); });
+  }
+}
+
 
 /* Tab switching */
 function initTabs() {
@@ -294,9 +497,13 @@ async function renderAdminList(section) {
       if (!confirm('Delete this item?')) return;
       const items = await getData(section);
       items.splice(idx, 1);
-      await saveData(section, items);
-      renderAdminList(section);
-      updateDashboard();
+      try {
+        await saveData(section, items);
+        renderAdminList(section);
+        updateDashboard();
+      } catch (err) {
+        alert(`Failed to delete: ${err.message}`);
+      }
     });
   });
 
@@ -329,10 +536,19 @@ function buildFormHandlers(section) {
       data.id = uid();
       items.push(data);
     }
-    await saveData(section, items);
-    hideForm(section);
-    renderAdminList(section);
-    updateDashboard();
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'Saving...';
+    try {
+      await saveData(section, items);
+      hideForm(section);
+      renderAdminList(section);
+      updateDashboard();
+    } catch (err) {
+      alert(`Failed to save: ${err.message}. Make sure you are logged in and the server is running.`);
+    } finally {
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'Save';
+    }
   });
 }
 
@@ -381,61 +597,58 @@ function showAttendees(eventId, eventTitle) {
   const listEl = document.querySelector('[data-attendee-list]');
   const countEl = document.querySelector('[data-attendee-count]');
   const titleEl = document.querySelector('[data-attendee-title]');
-  const pdfBtn = document.querySelector('[data-attendee-pdf]');
 
   titleEl.textContent = `Attendees — ${eventTitle}`;
-  listEl.innerHTML = '<tr><td colspan="4" style="padding:2em;text-align:center;color:var(--text-muted);">Loading...</td></tr>';
-  countEl.textContent = '';
   overlay.classList.add('is-open');
 
   const token = adminApi.getToken && adminApi.getToken();
   const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-  Promise.all([
-    fetch(`/api/rsvp/${eventId}`, { headers }).then(r => r.json()),
-  ]).then(([data]) => {
-    const rows = data.data || [];
-    countEl.textContent = `Total: ${rows.length} attendee${rows.length !== 1 ? 's' : ''}`;
-    if (rows.length === 0) {
-      listEl.innerHTML = '<tr><td colspan="4" style="padding:2em;text-align:center;color:var(--text-muted);">No attendees yet.</td></tr>';
-    } else {
-      listEl.innerHTML = rows.map((r, i) => `
+  fetch(`/api/rsvp/${eventId}`, { headers })
+    .then(r => { if (!r.ok) throw new Error('Failed'); return r.json(); })
+    .then(data => {
+      const attendees = data.data || [];
+      countEl.textContent = `Total: ${attendees.length}`;
+      if (!attendees.length) {
+        listEl.innerHTML = '<tr><td colspan="4" style="padding:2em;text-align:center;color:var(--text-muted);">No attendees yet.</td></tr>';
+        return;
+      }
+      listEl.innerHTML = attendees.map((a, i) => `
         <tr${i % 2 === 0 ? ' style="background:#faf6f0;"' : ''}>
           <td style="padding:0.5em;">${i + 1}</td>
-          <td style="padding:0.5em;">${r.name}</td>
-          <td style="padding:0.5em;">${r.phone}</td>
-          <td style="padding:0.5em;">${r.created_at ? r.created_at.slice(0, 10) : '-'}</td>
+          <td style="padding:0.5em;">${a.name}</td>
+          <td style="padding:0.5em;">${a.phone}</td>
+          <td style="padding:0.5em;">${a.created_at ? a.created_at.slice(0, 10) : '-'}</td>
         </tr>
       `).join('');
-    }
-  }).catch(() => {
-    listEl.innerHTML = '<tr><td colspan="4" style="padding:2em;text-align:center;color:#d32f2f;">Failed to load attendees.</td></tr>';
-  });
-
-  pdfBtn.onclick = () => {
-    const token = adminApi.getToken && adminApi.getToken();
-    const headers = token ? { Authorization: `Bearer ${token}` } : {};
-    fetch(`/api/rsvp/${eventId}/pdf`, { headers })
-      .then(r => {
-        if (!r.ok) throw new Error('Failed');
-        return r.blob();
-      })
-      .then(blob => {
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        const safeName = eventTitle.replace(/[^a-zA-Z0-9\s-]/g, '').replace(/\s+/g, ' ').trim() || 'Attendance List';
-        a.download = `${safeName} - Attendance List.pdf`;
-        a.click();
-        URL.revokeObjectURL(url);
-      })
-      .catch(() => alert('Failed to download PDF.'));
-  };
+    })
+    .catch(() => {
+      listEl.innerHTML = '<tr><td colspan="4" style="padding:2em;text-align:center;color:#d32f2f;">Failed to load attendees.</td></tr>';
+    });
 
   document.querySelector('[data-attendee-close]').onclick = () => overlay.classList.remove('is-open');
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) overlay.classList.remove('is-open');
   });
+
+  const downloadBtn = document.querySelector('[data-attendee-download]');
+  if (downloadBtn) {
+    downloadBtn.onclick = () => {
+      const token = adminApi.getToken && adminApi.getToken();
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      fetch(`/api/rsvp/${eventId}/pdf`, { headers })
+        .then(r => { if (!r.ok) throw new Error('Failed'); return r.blob(); })
+        .then(blob => {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `${eventTitle.replace(/[^a-zA-Z0-9\s-]/g, '').replace(/\s+/g, ' ').trim() || 'Attendance List'} - Attendance List.pdf`;
+          a.click();
+          URL.revokeObjectURL(url);
+        })
+        .catch(() => alert('Failed to download report.'));
+    };
+  }
 }
 
 /* ─── IMAGE PREVIEW ─── */
@@ -639,9 +852,9 @@ function getDefaultFixedList(section) {
       { id: 'cb1', name: 'Peter',    num: 4,  label: 'CB', group: 'def', x: 38, y: 82, color: '#6b5d4a', img: '/images/koh-v-2.jpeg' },
       { id: 'cb2', name: 'John',     num: 5,  label: 'CB', group: 'def', x: 62, y: 82, color: '#6b5d4a', img: '/images/cross-2.jpeg' },
       { id: 'lb',  name: 'Mark',     num: 3,  label: 'LB', group: 'def', x: 18, y: 78, color: '#6b5d4a', img: '/images/st-monica-1.jpeg' },
-      { id: 'cm1', name: 'Luke',     num: 8,  label: 'CM', group: 'mid', x: 28, y: 55, color: '#2b5c8a', img: '/images/mary_jesus_01.jpeg' },
-      { id: 'cm2', name: 'Andrew',   num: 6,  label: 'CM', group: 'mid', x: 50, y: 50, color: '#2b5c8a', img: '/images/index.jpeg' },
-      { id: 'cm3', name: 'Thomas',   num: 10, label: 'CM', group: 'mid', x: 72, y: 55, color: '#2b5c8a', img: '/images/koh-01.jpeg' },
+      { id: 'cm1', name: 'Luke',     num: 8,  label: 'CM',  group: 'mid', x: 28, y: 48, color: '#2b5c8a', img: '/images/mary_jesus_01.jpeg' },
+      { id: 'cm2', name: 'Andrew',   num: 6,  label: 'CDM', group: 'mid', x: 50, y: 62, color: '#2b5c8a', img: '/images/index.jpeg' },
+      { id: 'cm3', name: 'Thomas',   num: 10, label: 'CM',  group: 'mid', x: 72, y: 48, color: '#2b5c8a', img: '/images/koh-01.jpeg' },
       { id: 'lw',  name: 'Samuel',   num: 11, label: 'LW', group: 'fwd', x: 18, y: 25, color: '#c8963e', img: '/images/koh-02.jpeg' },
       { id: 'st',  name: 'Joseph',   num: 9,  label: 'ST', group: 'fwd', x: 50, y: 18, color: '#c8963e', img: '/images/koh-v-2.jpeg' },
       { id: 'rw',  name: 'David',    num: 7,  label: 'RW', group: 'fwd', x: 82, y: 25, color: '#c8963e', img: '/images/cross-2.jpeg' },
@@ -1293,6 +1506,7 @@ async function initApp() {
   }
   initLeadershipPage();
   initFamiliesPage();
+  initMembersPage();
   initFootballStatsPage();
   initUploads();
   initGalleryImagePreview();

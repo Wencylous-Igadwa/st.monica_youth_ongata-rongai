@@ -1,4 +1,4 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import jwt from 'jsonwebtoken';
@@ -10,9 +10,13 @@ import authRouter, { JWT_SECRET } from './routes/auth.js';
 import crudRouter from './routes/crud.js';
 import uploadRouter from './routes/upload.js';
 import rsvpRouter from './routes/rsvp.js';
+import leaderboardRouter from './routes/leaderboard.js';
+import santaRouter from './routes/santa.js';
+import membersRouter from './routes/members.js';
 import { initDb } from './db.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: join(__dirname, '.env') });
 const PORT = process.env.PORT || 3001;
 
 export function createApp() {
@@ -39,6 +43,10 @@ export function createApp() {
   app.use('/api', uploadRouter);
 
   app.use('/api/rsvp', rsvpRouter);
+  app.use('/api/leaderboard', leaderboardRouter);
+  app.use('/api', santaRouter);
+
+  app.use('/api/admin', membersRouter);
 
   app.use('/api', (req, res, next) => {
     if (req.method === 'GET') return next();
@@ -75,7 +83,13 @@ if (fileURLToPath(import.meta.url) === process.argv[1]) {
           '/community': 'community.html',
           '/trivia': 'trivia.html',
           '/spotlight': 'spotlight.html',
-           '/s3s4m3': 's3s4m3.html',
+          '/register': 'auth.html',
+          '/login': 'auth.html',
+          '/verify': 'verify.html',
+          '/s3s4m3': 's3s4m3.html',
+          '/santa-profile': 'santa-profile.html',
+          '/santa-users': 'santa-users.html',
+          '/profile': 'profile.html',
         };
 
         app.get('/admin', (req, res) => res.redirect('/s3s4m3'));

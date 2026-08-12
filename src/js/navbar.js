@@ -5,6 +5,16 @@ export function initNavbar() {
   const navInner = navbar?.querySelector('.nav-inner');
   let lastScroll = 0;
 
+  function updateAuthButtons() {
+    const user = localStorage.getItem('auth_user');
+    const loginBtn = document.querySelector('[data-nav-login]');
+    if (!loginBtn) return;
+
+    loginBtn.style.display = user ? 'none' : '';
+  }
+
+  updateAuthButtons();
+
   function repositionNavLinks() {
     if (!navLinks || !navInner || !navbar) return;
     const isMobile = window.innerWidth < 992;

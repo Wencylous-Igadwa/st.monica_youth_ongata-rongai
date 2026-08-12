@@ -17,6 +17,19 @@ router.post('/', async (req, res) => {
   res.status(201).json(rsvp);
 });
 
+router.get('/by-name/:name', async (req, res) => {
+  const name = decodeURIComponent(req.params.name);
+  const rows = await db.all(
+    `SELECT r.event_id, r.event_title, r.name, r.phone, r.created_at, e.date as event_date, e.time as event_time, e.location as event_location
+     FROM rsvps r
+     LEFT JOIN events e ON e.id = r.event_id
+     WHERE r.name = ?
+     ORDER BY r.created_at DESC`,
+    [name]
+  );
+  res.json({ data: rows });
+});
+
 router.use((req, res, next) => {
   if (!req.user) return res.status(401).json({ error: 'Unauthorized' });
   next();
