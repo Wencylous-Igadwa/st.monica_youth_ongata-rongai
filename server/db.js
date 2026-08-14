@@ -26,12 +26,27 @@ const db = {
 
 export async function initDb() {
   const host = process.env.DB_HOST || 'localhost';
-  const port = parseInt(process.env.DB_PORT || '3307', 10);
+  const port = parseInt(process.env.DB_PORT || '3306', 10);
   const user = process.env.DB_USER || 'monica';
-  const password = process.env.DB_PASS || 'monica123';
+  // Accepts either DB_PASS or DB_PASSWORD so Render variables match
+  const password = process.env.DB_PASS || process.env.DB_PASSWORD || 'monica123';
   const database = process.env.DB_NAME || 'st_monica';
 
-  pool = mysql.createPool({ host, port, user, password, database, waitForConnections: true, connectionLimit: 10 });
+  // Enable SSL for cloud hosters like Aiven when not on localhost
+  const sslConfig = host !== 'localhost' && host !== '127.0.0.1' 
+    ? { rejectUnauthorized: false } 
+    : false;
+
+  pool = mysql.createPool({ 
+    host, 
+    port, 
+    user, 
+    password, 
+    database, 
+    ssl: sslConfig,
+    waitForConnections: true, 
+    connectionLimit: 10 
+  });
 
   const schemaPath = join(__dirname, 'schema.sql');
   if (readFileSync) {
