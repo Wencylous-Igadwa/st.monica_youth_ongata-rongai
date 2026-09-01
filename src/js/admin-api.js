@@ -193,4 +193,32 @@ export const adminApi = {
     }
   },
 
+  /* ─── FOOTBALL COACH ─── */
+  async getCoach() {
+    try {
+      const res = await fetchWithTimeout(`${API_BASE}/store/football_coach`, { headers: headers(true) });
+      if (!res.ok) throw new Error('Fetch failed');
+      const data = await res.json();
+      return data.data;
+    } catch {
+      try {
+        const raw = localStorage.getItem('stm_football_coach');
+        return raw ? JSON.parse(raw) : null;
+      } catch { return null; }
+    }
+  },
+
+  async setCoach(data) {
+    try {
+      const res = await fetchWithTimeout(`${API_BASE}/store/football_coach`, {
+        method: 'PUT', headers: headers(true), body: JSON.stringify({ data }),
+      });
+      if (!res.ok) throw new Error('Save failed');
+      return true;
+    } catch {
+      localStorage.setItem('stm_football_coach', JSON.stringify(data));
+      return true;
+    }
+  },
+
 };

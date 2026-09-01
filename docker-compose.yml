@@ -2,14 +2,16 @@ services:
   db:
     image: mysql:8
     environment:
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: st_monica
-      MYSQL_USER: monica
-      MYSQL_PASSWORD: monica123
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
+      MYSQL_DATABASE: ${DB_NAME:-st_monica}
+      MYSQL_USER: ${DB_USER:-monica}
+      MYSQL_PASSWORD: ${DB_PASS:-monica123}
     ports:
-      - "3307:3306"
+      # Bound to localhost only - NOT exposed to the public internet
+      - "127.0.0.1:3307:3306"
     volumes:
       - db_data:/var/lib/mysql
+    restart: unless-stopped
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 5s
@@ -19,18 +21,28 @@ services:
   app:
     build: .
     ports:
-      - "3001:3001"
+      # Host port 80 -> container 3001 (Cloudflare proxy forwards HTTP here)
+      - "80:3001"
     environment:
       DB_HOST: db
       DB_PORT: "3306"
-      DB_USER: monica
-      DB_PASS: monica123
-      DB_NAME: st_monica
-      JWT_SECRET: st-monica-parish-secret-2025
+      DB_USER: ${DB_USER:-monica}
+      DB_PASS: ${DB_PASS:-monica123}
+      DB_NAME: ${DB_NAME:-st_monica}
+      JWT_SECRET: ${JWT_SECRET:-st-monica-parish-secret-2025}
       PORT: 3001
+      # SMTP Email Settings (Gmail) - injected at runtime from .env
+      SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}
+      SMTP_PORT: ${SMTP_PORT:-465}
+      SMTP_SECURE: ${SMTP_SECURE:-true}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+      SMTP_FROM: ${SMTP_FROM:-}
+      MAIL_FROM_NAME: ${MAIL_FROM_NAME:-St.Monica Youth Ongata Rongai}
     depends_on:
       db:
         condition: service_healthy
+    restart: unless-stopped
     volumes:
       - uploads_data:/app/server/uploads
 

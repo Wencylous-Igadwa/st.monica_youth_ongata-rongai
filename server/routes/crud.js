@@ -26,7 +26,7 @@ function sectionTable(section) {
 }
 
 /* ─── KV STORE ─── */
-const ALLOWED_STORE_KEYS = ['gallery_sphere', 'gallery_grid', 'football_stats'];
+const ALLOWED_STORE_KEYS = ['gallery_sphere', 'gallery_grid', 'football_stats', 'football_coach'];
 
 router.get('/store/:key', async (req, res, next) => {
   if (!ALLOWED_STORE_KEYS.includes(req.params.key)) {

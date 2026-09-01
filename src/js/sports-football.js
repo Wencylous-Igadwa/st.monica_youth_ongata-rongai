@@ -316,6 +316,17 @@ function renderLineup() {
   `).join('');
 }
 
+function renderCoach(coach) {
+  const box = document.querySelector('[data-fp-coach]');
+  if (!box) return;
+  if (!coach || (!coach.name && !coach.img)) { box.style.display = 'none'; return; }
+  const img = document.querySelector('[data-fp-coach-img]');
+  const name = document.querySelector('[data-fp-coach-name]');
+  if (img) img.style.backgroundImage = coach.img ? `url(${coach.img})` : '';
+  if (name) name.textContent = coach.name || 'Unknown';
+  box.style.display = '';
+}
+
 async function init() {
   const { lenis } = initLenis();
 
@@ -334,6 +345,8 @@ async function init() {
     loadList('football_stats', { matches: 24, goals: 16, cleanSheets: 8, trophies: 3 }),
   ]);
   await loadSquad();
+  const coach = await loadList('football_coach', null);
+  renderCoach(coach);
 
   const overlay = document.querySelector('[data-fp-overlay]');
   if (overlay) {

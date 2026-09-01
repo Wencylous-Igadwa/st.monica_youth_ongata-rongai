@@ -32,6 +32,10 @@ export async function loadList(section, defaults = []) {
       const data = await fetchJson(`${API_BASE}/football_stats`);
       return data.data || defaults;
     }
+    if (section === 'football_coach') {
+      const data = await fetchJson(`${API_BASE}/store/football_coach`);
+      return data.data || null;
+    }
   } catch {
     /* fall through to localStorage */
   }
@@ -89,6 +93,10 @@ export async function saveSingleton(section, data) {
   } else if (section === 'football_stats') {
     await fetchJson(`${API_BASE}/football_stats`, {
       method: 'PUT', headers, body: JSON.stringify(data),
+    }).catch(() => {});
+  } else if (section === 'football_coach') {
+    await fetchJson(`${API_BASE}/store/football_coach`, {
+      method: 'PUT', headers, body: JSON.stringify({ data }),
     }).catch(() => {});
   }
 }

@@ -2744,6 +2744,49 @@ html.is-ready .loader {
   letter-spacing: 0.05em;
 }
 
+.fp-coach {
+  margin-top: 1.5em;
+  padding: 1.25em 1em;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.fp-coach-img {
+  width: 120px;
+  height: 160px;
+  margin: 0 auto 0.75em;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-color: #ddd6cc;
+  border: 2px solid rgba(200,150,62,0.35);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+}
+
+.fp-coach-role {
+  font-family: var(--font-mono);
+  font-size: 0.62em;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent-gold);
+  margin-bottom: 0.35em;
+}
+
+.fp-coach-name {
+  font-family: var(--font-display);
+  font-size: 1.15em;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+@media (max-width: 767px) {
+  .fp-coach-img { width: 110px; height: 146px; }
+}
+
 .fp-pitch-scene .pitch {
   transform: rotateX(18deg);
   transform-origin: center bottom;

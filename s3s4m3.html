@@ -126,6 +126,7 @@
           <div class="admin-nav-sub" data-admin-sub="sports">
             <button class="admin-nav-sub-btn" data-admin-tab="sports">Match Results</button>
             <button class="admin-nav-sub-btn" data-admin-tab="football_squad">Football Squad</button>
+            <button class="admin-nav-sub-btn" data-admin-tab="football_coach">Football Coach</button>
             <button class="admin-nav-sub-btn" data-admin-tab="football_stats">Football Stats</button>
             <button class="admin-nav-sub-btn" data-admin-tab="hof">Hall of Fame</button>
           </div>
@@ -658,6 +659,35 @@
 
         <div class="admin-list" data-admin-list="football_squad">
           <div class="admin-list-empty">Loading squad...</div>
+        </div>
+      </section>
+
+      <!-- FOOTBALL COACH -->
+      <section class="admin-section" data-admin-section="football_coach">
+        <div class="admin-section-header">
+          <h2 class="admin-section-title">Football Coach</h2>
+          <p class="admin-section-desc">Update the coach name and photo shown on the football page</p>
+        </div>
+        <div class="admin-form" data-admin-form="football_coach">
+          <h3 class="admin-form-title" data-form-title="football_coach">Coach Details</h3>
+          <div class="admin-form-grid">
+            <div class="admin-field">
+              <label>Coach Name</label>
+              <input type="text" data-field="football_coach-name" placeholder="Coach name">
+            </div>
+            <div class="admin-field admin-field-wide">
+              <label>Coach Photo URL</label>
+              <div class="admin-upload-row">
+                <input type="text" data-field="football_coach-img" placeholder="/uploads/coach.jpg">
+                <button class="admin-upload-btn" data-upload-target="football_coach-img" title="Upload image">+</button>
+                <button class="admin-browse-btn" data-browse-target="football_coach-img" title="Browse images">📁</button>
+                <input type="file" accept="image/*" multiple data-upload-input="football_coach-img" style="display:none">
+              </div>
+            </div>
+          </div>
+          <div class="admin-form-actions">
+            <button class="admin-btn admin-btn-primary" data-admin-save="football_coach">Save</button>
+          </div>
         </div>
       </section>
 

@@ -1483,6 +1483,41 @@ function initFootballStatsPage() {
   cancelBtn.addEventListener('click', populateForm);
 }
 
+const FOOTBALL_COACH_DEFAULTS = { name: '', img: '' };
+
+async function getFootballCoach() {
+  try {
+    const data = await adminApi.getCoach();
+    if (data && (data.name || data.img)) return data;
+  } catch {}
+  return FOOTBALL_COACH_DEFAULTS;
+}
+
+function initFootballCoachPage() {
+  const form = document.querySelector('[data-admin-form="football_coach"]');
+  const saveBtn = form && form.querySelector('[data-admin-save]');
+  if (!form || !saveBtn) return;
+
+  async function populateForm() {
+    const data = await getFootballCoach();
+    form.querySelector('[data-field="football_coach-name"]').value = data.name || '';
+    form.querySelector('[data-field="football_coach-img"]').value = data.img || '';
+  }
+
+  populateForm();
+
+  saveBtn.addEventListener('click', async () => {
+    const data = {
+      name: form.querySelector('[data-field="football_coach-name"]').value.trim(),
+      img: form.querySelector('[data-field="football_coach-img"]').value.trim(),
+    };
+    if (data.name || data.img) {
+      if (adminApi.isLoggedIn()) adminApi.setCoach(data).catch(() => {});
+    }
+    alert('Coach updated.');
+  });
+}
+
 async function initApp() {
   initSidebar();
   initTabs();
@@ -1508,6 +1543,7 @@ async function initApp() {
   initFamiliesPage();
   initMembersPage();
   initFootballStatsPage();
+  initFootballCoachPage();
   initUploads();
   initGalleryImagePreview();
   updateDashboard();
